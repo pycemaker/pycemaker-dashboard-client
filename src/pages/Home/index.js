@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import BarPyce from "../../components/BarPyce";
 import LinePyce from "../../components/LinePyce";
 import Report from "../../components/Report";
 import { getCpu, getCpuNow } from "../../services/api";
@@ -41,6 +42,12 @@ export default function Home() {
           dateStart={formartDate(dateStart)}
           playInterval={playInterval}
           setPlayInterval={setPlayInterval} />
+        <BarPyce
+          getData={getCpu}
+          dateNow={formartDate(dateNow)}
+          playInterval={playInterval}
+          setPlayInterval={setPlayInterval}
+          timeRange={timeRange} />
         <Report
           getData={getCpu}
           dateNow={formartDate(dateNow)}
@@ -54,6 +61,12 @@ export default function Home() {
           dateStart={formartDate(dateStart)}
           playInterval={playInterval}
           setPlayInterval={setPlayInterval} />
+        <BarPyce
+          getData={getCpu}
+          dateNow={formartDate(dateNow)}
+          playInterval={playInterval}
+          setPlayInterval={setPlayInterval}
+          timeRange={timeRange} />
         <Report
           getData={getCpu}
           dateNow={formartDate(dateNow)}
