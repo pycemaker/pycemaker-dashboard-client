@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import '../../styles/style.css'
+import { dateFormatter } from "../../utils/formatters";
 
 export default function Report(props) {
 
@@ -19,29 +21,36 @@ export default function Report(props) {
       .catch(() => {
         console.log("Algo deu errado!")
       })
-  }, [])
+  }, [props.timeRange])
 
-  const dateFormatter = date => {
-    return new Date(date).toLocaleString();
-  };
+  // const dateFormatter = date => {
+  //   return new Date(date).toLocaleString();
+  // };
 
   return (
     <div>
-      <div>
-        Cresceu: {Math.round(growth)}
+      <div className="row">
+        <div className="col-sm">
+          <span className="component_title1">Cresceu</span>
+          <br></br>
+          <span className="component_percent">{Math.round(growth * 100)}%</span>
+        </div>
+        <div className="col-sm">
+          <span className="component_title1">Média de uso</span>
+          <br></br>
+          <span className="component_percent">{props.isPercentage ? Math.round(mean * 100) : Math.round(mean)}{props.measure}</span>
+        </div>
+
+        <div className="mt-5">
+          <span className="component_title1">Picos de Uso</span>
+          {higher && higher.map(item =>
+            <div><span style={{ color: "#15ED48", fontSize: "25pt", fontWeight: "bold" }}>+</span> {dateFormatter(item.time_series)} <span className="component_percent">{props.isPercentage ? Math.round(item.value) : Math.round(item.value)}{props.measure}</span></div>
+          )}
+          {lower && lower.map(item =>
+            <div><span style={{ color: "#D413AA", fontSize: "25pt", fontWeight: "bold" }}>-</span> {dateFormatter(item.time_series)} <span className="component_percent">{props.isPercentage ? Math.round(item.value) : Math.round(item.value)}{props.measure}</span></div>
+          )}
+        </div>
       </div>
-      <div>
-        Média de Uso: {Math.round(mean)}
-      </div>
-      <div>
-        Picos de Uso:
-      </div>
-      {higher && higher.map(item =>
-        <div>+ {dateFormatter(item.time_series)} - {Math.round(item.value)}</div>
-      )}
-      {lower && lower.map(item =>
-        <div>- {dateFormatter(item.time_series)} - {Math.round(item.value)}</div>
-      )}
     </div>
   )
 

@@ -9,6 +9,7 @@ import {
   Legend,
   ReferenceLine
 } from "recharts";
+import { dateFormatter, formatPercentage } from "../../utils/formatters";
 // import { format } from "date-fns";
 
 
@@ -37,16 +38,16 @@ export default function LinePyce(props) {
   }, [props.playInterval])
 
 
-  const dateFormatter = date => {
-    return new Date(date).toLocaleString();
-  };
+  // const dateFormatter = date => {
+  //   return new Date(date).toLocaleString();
+  // };
 
-  const fixedDeciaml = floatNumber => {
-    return floatNumber.toFixed(2);
-  }
+  // const fixedDeciaml = floatNumber => {
+  //   return floatNumber.toFixed(2);
+  // }
 
   const formatter = (value, name, props) => {
-    return [fixedDeciaml(value), name, props]
+    return [formatPercentage(value), name, props]
   }
 
   return (
@@ -54,13 +55,13 @@ export default function LinePyce(props) {
     <div>
       <div>
         <LineChart
-          width={500}
+          width={700}
           height={300}
           data={data}
           margin={{
             top: 5,
             right: 30,
-            left: 20,
+            left: 0,
             bottom: 5
           }}
         >
@@ -69,10 +70,10 @@ export default function LinePyce(props) {
             dataKey="time_series"
             tickFormatter={dateFormatter}
           />
-          <YAxis tickFormatter={fixedDeciaml} />
+          <YAxis tickFormatter={formatPercentage} />
           <Tooltip formatter={formatter} />
           {/* <ReferenceLine x={refX} stroke="green" label="Min PAGE" /> */}
-          <Legend />
+          {/* <Legend /> */}
           <Line
             type="monotone"
             dataKey="value"

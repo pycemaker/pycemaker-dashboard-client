@@ -1,87 +1,164 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import Api from "../../services/api";
-import {
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend
-} from "recharts";
+import AreaPyce from "../../components/AreaPyce";
+import BarPyce from "../../components/BarPyce";
+import LinePyce from "../../components/LinePyce";
+import Report from "../../components/Report";
+import { getCpu, getCpuNow } from "../../services/api";
+import '../../styles/style.css'
+import { formartDate } from "../../utils/formatters";
+import Configuracoes from "../Configuracoes";
+import icon from "../../assets/icon.png";
+import HorizontalCard from "../../components/HorizontalCard";
 
 export default function Home() {
-  const api = new Api()
-  const dateNow = Date.now()
-  const [arrayLen, setArrayLen] = useState(10)
 
+  const [timeRange, setTimeRange] = useState(168)
+  const [isOpen, setIsOpen] = useState(false)
+  const [playInterval, setPlayInterval] = useState(true)
 
-  const [exs, setExs] = useState([...Array(10).keys()].map(i => ({ id: (Math.random() * 10), name: 'Item ' + (i + 1) })))
+  const dateNow = new Date()
 
-  useEffect(() => {
+  let dateStart = new Date(dateNow)
+  dateStart = new Date(dateStart.setHours(dateStart.getHours() - timeRange))
 
-    // setExs([...Array(arrayLen).keys()].map(i => ({ id: (i + 1), name: 'Item ' + (i + 1) })))
-    // setArrayLen(arrayLen + 1)
-    console.log(exs)
-    api.getCpu("07-04-2022-22-32", 20)
-      .then(res => {
-        console.log(20, res)
-      })
-      .catch(() => {
-        console.log("Algo deu errado!")
-      })
-  }, [])
-
-  function updateArray() {
-    setArrayLen(array => array + 1)
-  }
+  // function formartDate(date) {
+  //   let dformat =
+  //     String(date.getDate()).padStart(2, '0') + "-" +
+  //     String(date.getMonth() + 1).padStart(2, '0') + "-" +
+  //     String(date.getFullYear()) + "-" +
+  //     String(date.getHours()).padStart(2, '0') + "-" +
+  //     String(date.getMinutes()).padStart(2, '0') + "-" +
+  //     String(date.getSeconds()).padStart(2, '0')
+  //   return dformat
+  // }
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      updateArray()
-    }, 1000)
-    return () => clearInterval(interval);
-  }, [])
+    console.log(timeRange)
+    setPlayInterval(true)
+  }, [timeRange])
 
-  useEffect(() => {
-    console.log(arrayLen)
-    let array = [...Array(arrayLen).keys()].map(i => ({ id: (Math.random() * 10), name: 'Item ' + (i + 1) }))
-    setExs(() => array)
-    console.log(exs)
-  }, [arrayLen])
+
 
   return (
     <div>
-      <nav>
-        <Link to="/">Home</Link>
-        <Link to="/cadastro">Cadastro</Link>
-      </nav>
-      <div>
-        <LineChart
-          width={500}
-          height={300}
-          data={exs}
-          margin={{
-            top: 5,
-            right: 30,
-            left: 20,
-            bottom: 5
-          }}
-        >
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="name" />
-          <YAxis />
-          <Tooltip />
-          <Legend />
-          <Line
-            type="monotone"
-            dataKey="id"
-            stroke="#8884d8"
-            activeDot={{ r: 8 }}
-          />
-          <Line type="monotone" dataKey="uv" stroke="#82ca9d" />
-        </LineChart>
+      <div className="container">
+        <div className="justify-content-center">
+          <div className="display-menu">
+            <div className="display-icon">
+              <img src={icon} />
+              <Link to="/">
+                <span>PYCEMAKER</span>
+              </Link>
+            </div>
+            <div className="display-config">
+              <div className="me-2 menu-label-size">Analisar o período de: </div>
+              <select value={timeRange} onChange={e => { setTimeRange(e.target.value); setPlayInterval(false) }}>
+                <option value={6}>6 horas</option>
+                <option value={12}>12 horas</option>
+                <option value={24}>1 dia</option>
+                <option value={120}>5 dias</option>
+                <option value={168}>1 semana</option>
+              </select>
+              <button onClick={() => { setIsOpen(!isOpen) }}>Configurações</button>
+              <button onClick={() => setPlayInterval(!playInterval)} >{playInterval ? "Interromper" : "Retomar"}</button>
+            </div>
+          </div>
+          <div>
+            {isOpen &&
+              <Configuracoes setIsOpen={setIsOpen} isOpen={isOpen} />
+            }
+          </div>
+          <div>
+            <HorizontalCard
+              getData={getCpu}
+              getDataNow={getCpuNow}
+              dateNow={formartDate(dateNow)}
+              dateStart={formartDate(dateStart)}
+              playInterval={playInterval}
+              setPlayInterval={setPlayInterval}
+              timeRange={timeRange}
+              colorFill={"#15ED48"}
+            />
+          </div>
+          {/* 
+          <div className="card border-0 shadow mb-5 mt-5 p-4 bg-white rounded">
+            <div className="row">
+              <div className="col-sm-3">
+                <span className="component_title1">Níveis de Consumo</span>
+                <BarPyce
+                  getData={getCpu}
+                  dateNow={formartDate(dateNow)}
+                  playInterval={playInterval}
+                  setPlayInterval={setPlayInterval}
+                  timeRange={timeRange}
+                  width="100%"
+                  height={250} />
+              </div>
+              <div className="col-sm-6">
+                <span className="component_title1">Consumo de CPU</span>
+                <AreaPyce
+                  getData={getCpuNow}
+                  dateStart={formartDate(dateStart)}
+                  playInterval={playInterval}
+                  setPlayInterval={setPlayInterval}
+                  colorFill={"#15ED48"}
+                  width="100%"
+                  height={300} />
+              </div>
+              <div className="col-sm-3">
+                <Report
+                  getData={getCpu}
+                  dateNow={formartDate(dateNow)}
+                  playInterval={playInterval}
+                  setPlayInterval={setPlayInterval}
+                  timeRange={timeRange} />
+              </div>
+            </div>
+          </div>
+
+          <div className="card-group">
+            <div className="card me-3 border-0 shadow mb-5 bg-white rounded p-4">
+              <span className="component_title1">Consumo de RAM</span>
+              <AreaPyce
+                getData={getCpuNow}
+                dateStart={formartDate(dateStart)}
+                playInterval={playInterval}
+                setPlayInterval={setPlayInterval}
+                colorFill={"#9357FF"}
+                width="100%"
+                height={270} />
+              <div class="row mt-3">
+                <div class="col-sm">
+                  <span className="component_title1">Níveis de Consumo</span>
+                  <BarPyce
+                    getData={getCpu}
+                    dateNow={formartDate(dateNow)}
+                    playInterval={playInterval}
+                    setPlayInterval={setPlayInterval}
+                    timeRange={timeRange}
+                    width="100%"
+                    height={250} />
+                </div>
+                <div class="col-sm">
+                  <Report
+                    getData={getCpu}
+                    dateNow={formartDate(dateNow)}
+                    playInterval={playInterval}
+                    setPlayInterval={setPlayInterval}
+                    timeRange={timeRange} />
+                </div>
+              </div>
+            </div>
+
+            <div className="card ms-3 border-0 shadow mb-5 bg-white rounded p-4">
+
+            </div>
+          </div> */}
+
+
+
+        </div>
       </div>
     </div>
   );

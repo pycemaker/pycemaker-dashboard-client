@@ -1,78 +1,128 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import BarPyce from "../../components/BarPyce";
-import LinePyce from "../../components/LinePyce";
-import Report from "../../components/Report";
 import { getCpu, getCpuNow } from "../../services/api";
+import '../../styles/style.css'
+import { formartDate } from "../../utils/formatters";
+import Configuracoes from "../Configuracoes";
+import HorizontalCard from "../../components/HorizontalCard";
+import VerticalCard from "../../components/VerticalCard";
+import MenuDash from "../../components/MenuDash";
 
 export default function Home() {
 
+  const [timeRange, setTimeRange] = useState(168)
+  const [isOpen, setIsOpen] = useState(false)
   const [playInterval, setPlayInterval] = useState(true)
-  const [timeRange, setTimeRange] = useState(20)
 
   const dateNow = new Date()
 
   let dateStart = new Date(dateNow)
-  dateStart = new Date(dateStart.setHours(dateStart.getHours() - 6))
+  dateStart = new Date(dateStart.setHours(dateStart.getHours() - timeRange))
 
-  function formartDate(date) {
-    let dformat =
-      String(date.getDate()).padStart(2, '0') + "-" +
-      String(date.getMonth() + 1).padStart(2, '0') + "-" +
-      String(date.getFullYear()) + "-" +
-      String(date.getHours()).padStart(2, '0') + "-" +
-      String(date.getMinutes()).padStart(2, '0') + "-" +
-      String(date.getSeconds()).padStart(2, '0')
-    return dformat
-  }
-
+  useEffect(() => {
+    console.log(timeRange)
+    setPlayInterval(true)
+  }, [timeRange])
 
   return (
     <div>
-      <nav>
-        <Link to="/">Home</Link>
-        <Link to="/cadastro">Cadastro</Link>
-      </nav>
-      <div>
-        <button onClick={() => setPlayInterval(!playInterval)} >{playInterval ? "parar" : "observar"}</button>
-      </div>
-      <div style={{ background: "lightyellow" }}>
-        <LinePyce
-          getData={getCpuNow}
-          dateStart={formartDate(dateStart)}
-          playInterval={playInterval}
-          setPlayInterval={setPlayInterval} />
-        <BarPyce
-          getData={getCpu}
-          dateNow={formartDate(dateNow)}
-          playInterval={playInterval}
-          setPlayInterval={setPlayInterval}
-          timeRange={timeRange} />
-        <Report
-          getData={getCpu}
-          dateNow={formartDate(dateNow)}
-          playInterval={playInterval}
-          setPlayInterval={setPlayInterval}
-          timeRange={timeRange} />
-      </div>
-      <div style={{ background: "lightblue" }}>
-        <LinePyce
-          getData={getCpuNow}
-          dateStart={formartDate(dateStart)}
-          playInterval={playInterval}
-          setPlayInterval={setPlayInterval} />
-        <BarPyce
-          getData={getCpu}
-          dateNow={formartDate(dateNow)}
-          playInterval={playInterval}
-          setPlayInterval={setPlayInterval}
-          timeRange={timeRange} />
-        <Report
-          getData={getCpu}
-          dateNow={formartDate(dateNow)}
-          playInterval={playInterval}
-          setPlayInterval={setPlayInterval}
-          timeRange={timeRange} />
+      <div className="container">
+        <div className="justify-content-center">
+          <MenuDash
+            isOpen={isOpen}
+            setIsOpen={setIsOpen}
+            playInterval={playInterval}
+            setPlayInterval={setPlayInterval}
+            timeRange={timeRange}
+            setTimeRange={setTimeRange}
+          />
+          <div>
+            {isOpen &&
+              <Configuracoes setIsOpen={setIsOpen} isOpen={isOpen} />
+            }
+          </div>
+
+          <div className="card border-0 shadow p-4 mt-5 mb-5 bg-white rounded">
+            <HorizontalCard
+              title="Consumo de CPU"
+              measure="%"
+              isPercentage={true}
+              getData={getCpu}
+              getDataNow={getCpuNow}
+              dateNow={formartDate(dateNow)}
+              dateStart={formartDate(dateStart)}
+              playInterval={playInterval}
+              setPlayInterval={setPlayInterval}
+              timeRange={timeRange}
+              colorFill={"#15ED48"}
+            />
+          </div>
+          <div className="card-group">
+            <div className="card me-3 border-0 shadow bg-white rounded p-4">
+              <VerticalCard
+                title="Consumo de RAM"
+                measure="MB"
+                isPercentage={false}
+                getData={getCpu}
+                getDataNow={getCpuNow}
+                dateNow={formartDate(dateNow)}
+                dateStart={formartDate(dateStart)}
+                playInterval={playInterval}
+                setPlayInterval={setPlayInterval}
+                timeRange={timeRange}
+                colorFill={"#9357FF"}
+              />
+            </div>
+            <div className="card ms-3 border-0 shadow bg-white rounded p-4">
+              <VerticalCard
+                title="Consumo de Disco"
+                measure="%"
+                isPercentage={true}
+                getData={getCpu}
+                getDataNow={getCpuNow}
+                dateNow={formartDate(dateNow)}
+                dateStart={formartDate(dateStart)}
+                playInterval={playInterval}
+                setPlayInterval={setPlayInterval}
+                timeRange={timeRange}
+                colorFill={"#FFF73A"}
+              />
+            </div>
+          </div>
+          <div className="card border-0 shadow p-4 mt-5 mb-5 bg-white rounded">
+            <HorizontalCard
+              title="Tempo de Resposta"
+              measure="ms"
+              isPercentage={false}
+              getData={getCpu}
+              getDataNow={getCpuNow}
+              dateNow={formartDate(dateNow)}
+              dateStart={formartDate(dateStart)}
+              playInterval={playInterval}
+              setPlayInterval={setPlayInterval}
+              timeRange={timeRange}
+              colorFill={"#15ED48"}
+            />
+          </div>
+          <div className="card border-0 shadow p-4 mt-5 mb-5 bg-white rounded">
+            <HorizontalCard
+              title="Falhas HTTP"
+              measure="/5s"
+              isPercentage={false}
+              getData={getCpu}
+              getDataNow={getCpuNow}
+              dateNow={formartDate(dateNow)}
+              dateStart={formartDate(dateStart)}
+              playInterval={playInterval}
+              setPlayInterval={setPlayInterval}
+              timeRange={timeRange}
+              colorFill={"#D413AA"}
+            />
+          </div>
+
+          <div className="p-2">
+
+          </div>
+        </div>
       </div>
     </div>
   );

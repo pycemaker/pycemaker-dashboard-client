@@ -1,0 +1,87 @@
+@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&display=swap");
+
+body {
+    font-family: "Outfit", sans-serif;
+    background-color: #E5E5E5;
+    height: 100vh;
+}
+
+.component_title1 {
+    font-size: 12pt;
+    font-weight: 700;
+}
+
+.component_percent{
+    font-size: 25pt;
+    font-weight: bold;
+}
+
+.display-menu{
+    display: flex;
+    margin-top: 10px;
+}
+
+.display-icon{
+    display:flex;
+}
+
+.display-icon a {
+    color: #000000;
+    font-size: 1.8em;
+    font-weight: bold;
+    text-decoration: none;
+    text-transform: uppercase;
+    padding-left: 10px;
+}
+
+.display-icon a:hover{
+    color: #000000;
+}
+
+.display-config{
+    display: flex;
+    flex: auto;
+    justify-content: flex-end;
+    align-items: flex-start;
+    padding-top: 10px;
+}
+
+.display-config select{
+    margin-right: 50px;
+    border-radius: 20px 20px 20px 20px;
+    border: 1px solid #000000;
+    padding: 5px;
+    padding-right: 10px;
+    padding-left: 10px;
+    font-family: "Outfit", sans-serif;
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+
+
+.display-config button{
+    background:#FFF ;
+    border-radius: 20px;
+    border: 1px solid #000000;
+    padding: 5px;
+    padding-right: 10px;
+    padding-left: 10px;
+    font-family: "Outfit",sans-serif;
+    font-weight: bold;
+}
+
+.display-config button:last-child{
+    border: 1px solid #15ED48;
+    margin-left: 10px;
+}
+
+.menu-label-size{
+    font-family: "Outfit", sans-serif;
+    font-size: 1em;
+    font-weight: 700;
+}
+
+h5{
+    font-family: "Outfit", sans-serif;
+}
