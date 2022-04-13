@@ -16,7 +16,7 @@ export function getCpuNow(dateStart) {
   return api.get(`/cpu/${dateStart}`);
 }
 
-export function getRamReport(dateNow, timeRange) {
+export function getRam(dateNow, timeRange) {
   return api.get(`/ram/${dateNow}/${timeRange}`);
 }
 
@@ -24,7 +24,7 @@ export function getRamNow(dateStart) {
   return api.get(`/ram/${dateStart}`);
 }
 
-export function getDiskeport(dateNow, timeRange) {
+export function getDisk(dateNow, timeRange) {
   return api.get(`/disk/${dateNow}/${timeRange}`);
 }
 
@@ -32,7 +32,7 @@ export function getDiskNow(dateStart) {
   return api.get(`/disk/${dateStart}`);
 }
 
-export function getRespTimeReport(dateNow, timeRange) {
+export function getRespTime(dateNow, timeRange) {
   return api.get(`/response_time/${dateNow}/${timeRange}`);
 }
 
@@ -40,7 +40,7 @@ export function getRespTimeNow(dateStart) {
   return api.get(`/response_time/${dateStart}`);
 }
 
-export function getHttpFailReport(dateNow, timeRange) {
+export function getHttpFail(dateNow, timeRange) {
   return api.get(`/http_fail/${dateNow}/${timeRange}`);
 }
 

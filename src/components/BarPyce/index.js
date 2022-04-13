@@ -27,7 +27,7 @@ export default function BarPyce(props) {
   // };
 
   const formatter = (value, name, props) => {
-    return [formatPercentage(value), name, props]
+    return [formatPercentage(value, props.isPercentage), name, props]
   }
 
   return (

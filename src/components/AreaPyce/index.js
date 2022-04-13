@@ -26,6 +26,7 @@ export default function AreaPyce(props) {
       props.getDataNow(props.dateStart)
         .then(res => {
           setData(res.data)
+          console.log(props.title, res.data)
         })
         .catch(() => {
           console.log("Algo deu errado!")
@@ -70,7 +71,7 @@ export default function AreaPyce(props) {
   };
 
   const formatter = (value, name, props) => {
-    return [formatPercentage(value), name, props]
+    return [formatPercentage(value, props.isPercentage), name, props]
   }
 
   return (
@@ -99,11 +100,11 @@ export default function AreaPyce(props) {
           tick={<CustomizedAxisTick />}
         />
         <YAxis
-          tickFormatter={fixedToInt}
+          tickFormatter={props.tickFormatter}
           axisLine={false}
           tickLine={false}
           padding={{ bottom: 1 }}
-          domain={[0, 1]} />
+          domain={props.domain} />
         <Tooltip formatter={formatter} labelFormatter={dateFormatter} />
         {/* <ReferenceLine x={refX} stroke="green" label="Min PAGE" /> */}
         {/* <Legend iconType="rect" fill={props.colorFill} stroke={props.colorFill} layout="horizontal" verticalAlign="top" align="right" wrapperStyle={{

@@ -24,12 +24,19 @@ export function fixedDecimal(floatNumber) {
   return floatNumber.toFixed(2);
 }
 
-export function formatPercentage(number) {
-  return (number * 100).toFixed(2);
+export function formatPercentage(number, isPercentage) {
+  if (isPercentage) {
+    return (number * 100).toFixed(2);
+  }
+  return (number).toFixed(2);
 }
 
 export function fixedToInt(number) {
   return (number * 100).toFixed(0);
+}
+
+export function fixedToIntWithouPercentage(number) {
+  return (number).toFixed(0);
 }
 
 export function formatToMegabytes(bytes) {

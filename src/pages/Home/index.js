@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { getCpu, getCpuNow } from "../../services/api";
+import { getCpu, getCpuNow, getRam, getRamNow } from "../../services/api";
 import '../../styles/style.css'
-import { formartDate } from "../../utils/formatters";
+import { fixedToInt, fixedToIntWithouPercentage, formartDate } from "../../utils/formatters";
 import Configuracoes from "../Configuracoes";
 import HorizontalCard from "../../components/HorizontalCard";
 import VerticalCard from "../../components/VerticalCard";
@@ -54,22 +54,27 @@ export default function Home() {
               setPlayInterval={setPlayInterval}
               timeRange={timeRange}
               colorFill={"#15ED48"}
+              tickFormatter={fixedToInt}
+              domain={[0, 1]}
             />
           </div>
           <div className="card-group">
             <div className="card me-3 border-0 shadow bg-white rounded p-4">
               <VerticalCard
                 title="Consumo de RAM"
-                measure="MB"
+                measure="%"
                 isPercentage={false}
-                getData={getCpu}
-                getDataNow={getCpuNow}
+                getData={getRam}
+                getDataNow={getRamNow}
                 dateNow={formartDate(dateNow)}
                 dateStart={formartDate(dateStart)}
                 playInterval={playInterval}
                 setPlayInterval={setPlayInterval}
                 timeRange={timeRange}
                 colorFill={"#9357FF"}
+                tickFormatter={fixedToIntWithouPercentage}
+                domain={[0, 100]}
+
               />
             </div>
             <div className="card ms-3 border-0 shadow bg-white rounded p-4">
@@ -85,6 +90,8 @@ export default function Home() {
                 setPlayInterval={setPlayInterval}
                 timeRange={timeRange}
                 colorFill={"#FFF73A"}
+                tickFormatter={fixedToInt}
+                domain={[0, 1]}
               />
             </div>
           </div>
@@ -101,6 +108,8 @@ export default function Home() {
               setPlayInterval={setPlayInterval}
               timeRange={timeRange}
               colorFill={"#15ED48"}
+              tickFormatter={fixedToInt}
+              domain={[0, 1]}
             />
           </div>
           <div className="card border-0 shadow p-4 mt-5 mb-5 bg-white rounded">
@@ -116,6 +125,8 @@ export default function Home() {
               setPlayInterval={setPlayInterval}
               timeRange={timeRange}
               colorFill={"#D413AA"}
+              tickFormatter={fixedToInt}
+              domain={[0, 1]}
             />
           </div>
 
