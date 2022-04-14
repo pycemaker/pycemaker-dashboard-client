@@ -1,70 +1,54 @@
-# Getting Started with Create React App
+# Pycemaker - Repositório do Front-End Dashboard
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Essa é a aplicação com a interface do usuário construída para navegadores, nela é possível visualizar métricas de consumo de CPU e RAM sobre um intervalo de tempo em tempo real.
 
-## Available Scripts
+# 📦 Repositórios integrantes do projeto
 
-In the project directory, you can run:
+| Repositório                                                                                   | Descrição                   |
+| --------------------------------------------------------------------------------------------- | --------------------------- |
+| [pycemaker-docs](https://github.com/pycemaker/pycemaker-docs)                                 | Apresentação e documentação |
+| [pycemaker-dashboard-client](https://github.com/pycemaker/pycemaker-dashboard-client)         | Front-End Dashboard         |
+| [pycemaker-dashboard-api](https://github.com/pycemaker/pycemaker-dashboard-api)               | API para Dashboard          |
+| [pycemaker-ETL-Flow](https://github.com/pycemaker/pycemaker-etl-flow)                         | Pycemaker ETL Flow          |
+| [pycemaker-form-client](https://github.com/pycemaker/pycemaker-form-client)                   | Front-End para Formulário   |
+| [pycemaker-form-server](https://github.com/pycemaker/pycemaker-form-server)                   | Api para Formuário          |
 
-### `npm start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+# ⚙️ Instruções de Instalação e Uso
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+<ul>
+<li><b>Node.js</b></li>
+<ul>
+<li>Baixe e instale o ambiente de excecução Node.js:</li>
+<a href="https://nodejs.org/en/download">Node.js</a>
+</ul>
+</ul>
 
-### `npm test`
+<ul>
+<li><b>Dependências</b></li>
+<ul>
+<li>Abra o terminal na raiz desse repositório e instale as dependências necessárias:
+<br/>
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```bash
+$ npm install
+```
 
-### `npm run build`
+</li>
+</ul>
+</ul>
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+<ul>
+<li><b>Execute a aplicação</b></li>
+<ul>
+<li>Abra o terminal na raiz desse repositório e execute o comando:
+<br/>
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```bash
+$ npm start
+```
 
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+</li>
+</ul>
+</ul>
