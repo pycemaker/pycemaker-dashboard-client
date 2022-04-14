@@ -12,11 +12,11 @@ export function formartDate(date) {
 export function dateFormatter(date) {
   let format = new Date(date)
   let dformat =
-    String(format.getDate()).padStart(2, '0') + "/" +
-    String(format.getMonth() + 1).padStart(2, '0') + " " +
-    String(format.getHours()).padStart(2, '0') + ":" +
-    String(format.getMinutes()).padStart(2, '0') + ":" +
-    String(format.getSeconds()).padStart(2, '0')
+    String(format.getUTCDate()).padStart(2, '0') + "/" +
+    String(format.getUTCMonth() + 1).padStart(2, '0') + " " +
+    String(format.getUTCHours()).padStart(2, '0') + ":" +
+    String(format.getUTCMinutes()).padStart(2, '0') + ":" +
+    String(format.getUTCSeconds()).padStart(2, '0')
   return dformat
 };
 
@@ -26,9 +26,9 @@ export function fixedDecimal(floatNumber) {
 
 export function formatPercentage(number, isPercentage) {
   if (isPercentage) {
-    return (number * 100).toFixed(2);
+    return (number).toFixed(2);
   }
-  return (number).toFixed(2);
+  return (number * 100).toFixed(2);
 }
 
 export function fixedToInt(number) {

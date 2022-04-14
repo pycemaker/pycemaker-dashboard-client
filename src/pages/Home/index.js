@@ -45,7 +45,7 @@ export default function Home() {
             <HorizontalCard
               title="Consumo de CPU"
               measure="%"
-              isPercentage={true}
+              isPercentage={false}
               getData={getCpu}
               getDataNow={getCpuNow}
               dateNow={formartDate(dateNow)}
@@ -58,12 +58,31 @@ export default function Home() {
               domain={[0, 1]}
             />
           </div>
-          <div className="card-group">
+
+          <div className="card border-0 shadow p-4 mt-5 mb-5 bg-white rounded">
+            <HorizontalCard
+              title="Consumo de RAM"
+              measure="%"
+              isPercentage={true}
+              getData={getRam}
+              getDataNow={getRamNow}
+              dateNow={formartDate(dateNow)}
+              dateStart={formartDate(dateStart)}
+              playInterval={playInterval}
+              setPlayInterval={setPlayInterval}
+              timeRange={timeRange}
+              colorFill={"#9357FF"}
+              tickFormatter={fixedToIntWithouPercentage}
+              domain={[0, 100]}
+            />
+          </div>
+
+          {/* <div className="card-group">
             <div className="card me-3 border-0 shadow bg-white rounded p-4">
               <VerticalCard
                 title="Consumo de RAM"
                 measure="%"
-                isPercentage={false}
+                isPercentage={true}
                 getData={getRam}
                 getDataNow={getRamNow}
                 dateNow={formartDate(dateNow)}
@@ -74,14 +93,13 @@ export default function Home() {
                 colorFill={"#9357FF"}
                 tickFormatter={fixedToIntWithouPercentage}
                 domain={[0, 100]}
-
               />
             </div>
             <div className="card ms-3 border-0 shadow bg-white rounded p-4">
               <VerticalCard
                 title="Consumo de Disco"
                 measure="%"
-                isPercentage={true}
+                isPercentage={false}
                 getData={getCpu}
                 getDataNow={getCpuNow}
                 dateNow={formartDate(dateNow)}
@@ -99,7 +117,7 @@ export default function Home() {
             <HorizontalCard
               title="Tempo de Resposta"
               measure="ms"
-              isPercentage={false}
+              isPercentage={true}
               getData={getCpu}
               getDataNow={getCpuNow}
               dateNow={formartDate(dateNow)}
@@ -116,7 +134,7 @@ export default function Home() {
             <HorizontalCard
               title="Falhas HTTP"
               measure="/5s"
-              isPercentage={false}
+              isPercentage={true}
               getData={getCpu}
               getDataNow={getCpuNow}
               dateNow={formartDate(dateNow)}
@@ -128,7 +146,7 @@ export default function Home() {
               tickFormatter={fixedToInt}
               domain={[0, 1]}
             />
-          </div>
+          </div> */}
 
           <div className="p-2">
 

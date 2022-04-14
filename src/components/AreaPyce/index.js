@@ -70,7 +70,7 @@ export default function AreaPyce(props) {
     );
   };
 
-  const formatter = (value, name, props) => {
+  const formatter = (value, name, isPercentage) => {
     return [formatPercentage(value, props.isPercentage), name, props]
   }
 
