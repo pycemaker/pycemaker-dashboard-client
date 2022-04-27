@@ -16,6 +16,14 @@ export function getCpuNow(dateStart) {
   return api.get(`/cpu/${dateStart}`);
 }
 
+export function getCpuPrediction(dateStart) {
+  return api.get(`/cpus/${dateStart}`);
+}
+
+export function getCpuRandom(dateNow) {
+  return api.get(`/cpuss/${dateNow}`);
+}
+
 export function getRam(dateNow, timeRange) {
   return api.get(`/ram/${dateNow}/${timeRange}`);
 }

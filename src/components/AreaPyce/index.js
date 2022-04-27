@@ -11,7 +11,7 @@ import {
   ResponsiveContainer,
   LabelList
 } from "recharts";
-import { dateFormatter, fixedDecimal, fixedToInt, formartDate, formatPercentage } from "../../utils/formatters";
+import { dateFormatter, formatPercentage } from "../../utils/formatters";
 // import { format } from "date-fns";
 
 

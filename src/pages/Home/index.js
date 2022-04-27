@@ -6,6 +6,7 @@ import Configuracoes from "../Configuracoes";
 import HorizontalCard from "../../components/HorizontalCard";
 import VerticalCard from "../../components/VerticalCard";
 import MenuDash from "../../components/MenuDash";
+import AreaPyce2 from "../../components/AreaPyce2";
 
 export default function Home() {
 
@@ -41,7 +42,22 @@ export default function Home() {
             }
           </div>
 
-          <div className="card border-0 shadow p-4 mt-5 mb-5 bg-white rounded">
+
+          <div>
+            <AreaPyce2 colorFill={"#15ED48"} />
+          </div>
+          {/* <div>
+            <AreaPyce2 colorFill={"#9357FF"} />
+          </div>
+          <div>
+            <AreaPyce2 colorFill={"#FFF73A"} />
+          </div>
+          <div>
+            <AreaPyce2 colorFill={"#D413AA"} />
+          </div> */}
+
+
+          {/* <div className="card border-0 shadow p-4 mt-5 mb-5 bg-white rounded">
             <HorizontalCard
               title="Consumo de CPU"
               measure="%"
@@ -75,7 +91,7 @@ export default function Home() {
               tickFormatter={fixedToIntWithouPercentage}
               domain={[0, 100]}
             />
-          </div>
+          </div> */}
 
           {/* <div className="card-group">
             <div className="card me-3 border-0 shadow bg-white rounded p-4">
