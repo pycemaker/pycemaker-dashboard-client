@@ -1,13 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import icon from "../../assets/icon.png";
+import './style.css'
 
 export default function MenuDash(props) {
 
   return (
     <div className="display-menu">
       <div className="display-icon">
-        <img src={icon} />
+        <img src={icon} alt="logo Pycemaker" />
         <Link to="/">
           <span>PYCEMAKER</span>
         </Link>
@@ -22,7 +23,11 @@ export default function MenuDash(props) {
           <option value={168}>1 semana</option>
         </select>
         <button onClick={() => { props.setIsOpen(!props.isOpen) }}>Configurações</button>
-        <button onClick={() => props.setPlayInterval(!props.playInterval)} >{props.playInterval ? "Interromper" : "Retomar"}</button>
+        {props.playInterval === true ?
+          <button className="display-button-stop" onClick={(e) => props.setPlayInterval(false)} >Interromper</button>
+          :
+          <button className="display-button-play" onClick={(e) => props.setPlayInterval(true)} >Retomar</button>
+        }
       </div>
     </div>
   )

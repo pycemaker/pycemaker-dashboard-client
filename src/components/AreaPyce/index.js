@@ -26,7 +26,7 @@ export default function AreaPyce(props) {
       props.getDataNow(props.dateStart)
         .then(res => {
           setData(res.data)
-          console.log(props.title, res.data)
+          // console.log(props.title, res.data)
         })
         .catch(() => {
           console.log("Algo deu errado!")

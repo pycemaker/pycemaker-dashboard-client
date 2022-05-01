@@ -1,0 +1,101 @@
+.display-menu {
+  display: flex;
+  margin-top: 10px;
+}
+
+.display-icon {
+  display: flex;
+}
+
+.display-icon:hover {
+  transform: scale(1.09);
+}
+
+.display-icon a {
+  color: #000000;
+  font-size: 1.8em;
+  font-weight: bold;
+  text-decoration: none;
+  text-transform: uppercase;
+  padding-left: 10px;
+}
+
+.display-icon a:hover {
+  color: #000000;
+}
+
+.display-icon:hover>img {
+  filter: hue-rotate(360deg);
+  transition: all 1s ease-in-out 0s;
+}
+
+.display-config {
+  display: flex;
+  flex: auto;
+  justify-content: flex-end;
+  align-items: flex-start;
+  padding-top: 10px;
+}
+
+.display-config select {
+  margin-right: 50px;
+  border-radius: 20px;
+  border: 1px solid #000000;
+  padding: 5px;
+  padding-right: 10px;
+  padding-left: 10px;
+  font-family: "Outfit", sans-serif;
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.display-config button:not(:last-child) {
+  background: #FFF;
+  border-radius: 20px;
+  border: 1px solid #000000;
+  padding: 5px;
+  padding-right: 10px;
+  padding-left: 10px;
+  font-family: "Outfit", sans-serif;
+  font-weight: bold;
+}
+
+.display-button-play {
+  background: #FFF;
+  border-radius: 20px;
+  padding: 5px;
+  padding-right: 10px;
+  padding-left: 10px;
+  font-family: "Outfit", sans-serif;
+  font-weight: bold;
+  border: 1px solid #15ED48;
+  margin-left: 10px;
+}
+
+.display-button-play:hover {
+  background: #15ED48;
+  color: #000;
+}
+
+.display-button-stop {
+  background: #FFF;
+  border-radius: 20px;
+  padding: 5px;
+  padding-right: 10px;
+  padding-left: 10px;
+  font-family: "Outfit", sans-serif;
+  font-weight: bold;
+  border: 1px solid #ED1556;
+  margin-left: 10px;
+}
+
+.display-button-stop:hover {
+  background: #ED1556;
+  color: #000;
+}
+
+.menu-label-size {
+  font-family: "Outfit", sans-serif;
+  font-size: 1em;
+  font-weight: 700;
+}

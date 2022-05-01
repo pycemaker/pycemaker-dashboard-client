@@ -1,0 +1,25 @@
+.pcm-card-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.pcm-card-title>button {
+  border: 0;
+  background: #fff;
+  align-self: center;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  color: #817C7C;
+  /* stroke: #15ED48 */
+}
+
+.pcm-card-title>button:hover {
+  border: 1px solid #15ED48;
+  /* border-radius: 10px; */
+  padding: 2px;
+  transform: scale(1.29);
+  color: #000;
+  background-color: #15ED48;
+}
