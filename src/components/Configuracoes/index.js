@@ -1,23 +1,116 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import { getJobsData, modifyJobs, scheduleJobs } from "../../services/api";
 import './style.css'
+import styled from "styled-components";
+import CurrencyInput from 'react-currency-input-field';
+import NumberFormat from 'react-number-format';
 
 
 export default function Configuracoes(props) {
 
 
-  const [isChecked, setIsChecked] = useState(true)
-  function setStyle(e) {
-    // e = document.getElementById("cpu-consume")
-    e.target.parentNode.style.outline = '1px solid #000';
-    e.target.parentNode.style.transform = 'scale(1.09)';
+  const [alertPredict, setAlertPredict] = useState(false)
+  const [emailTo, setEmailTo] = useState("")
+  const [interval, setInterval] = useState("6")
+  const [startHour, setStartHour] = useState("12")
+  const [startMinute, setStartMinute] = useState("00")
+  const [JobExists, setJobExists] = useState(false)
+  const [cpu, setCpu] = useState(75)
+  const [ram, setRam] = useState(50)
+  const [responseTime, setResponseTime] = useState(200)
+  const [requestCount, setRequestCount] = useState(30)
+
+
+  // function setStyle(e) {
+  //   // e = document.getElementById("cpu-consume")
+  //   e.target.parentNode.style.outline = '1px solid #000';
+  //   e.target.parentNode.style.transform = 'scale(1.09)';
+  // };
+
+  // function disableStyle(e) {
+  //   // e = document.getElementById("cpu-consume")
+  //   e.target.parentNode.style.outline = 'none';
+  //   e.target.parentNode.style.transform = 'scale(1)';
+  // };
+
+  useEffect(() => {
+    getJobsData()
+      .then(res => {
+        console.log(res.data)
+        if (res.data) {
+          let data = res.data
+          function findIndex(data, key, value) {
+            for (let i = 0; i < data.length; i++) {
+              if (data[i][key].includes(value)) {
+                return i;
+              }
+            }
+          }
+          console.log(data)
+          let index = findIndex(data, "job_name", "report")
+
+          setEmailTo(data[index].email_to)
+          setInterval(data[index].interval)
+          setStartHour(data[index].start_date.split("-")[0])
+          setStartMinute(data[index].start_date.split("-")[1])
+          setJobExists(true)
+
+          index = findIndex(data, "job_name", "alert_predict")
+
+          setCpu(data[index].cpu_trigger)
+          setRam(data[index].ram_trigger)
+          setResponseTime(data[index].response_time_trigger)
+          setRequestCount(data[index].request_count_trigger)
+
+        }
+      })
+      .catch((e) => {
+        console.log("Algo deu errado!")
+        alert(e.response.data.msg)
+      })
+  }, [])
+
+
+  const responseTimeLimit = (inputObj) => {
+    const { value } = inputObj;
+    if (value <= 1000) return true;
+    return false;
   };
 
-  function disableStyle(e) {
-    // e = document.getElementById("cpu-consume")
-    e.target.parentNode.style.outline = 'none';
-    e.target.parentNode.style.transform = 'scale(1)';
-  };
-
+  const salvar = (e) => {
+    e.preventDefault()
+    let date = new Date().toLocaleDateString()
+    date = date.replace("/", "-")
+    date = date.replace("/", "-")
+    date = `${date}-${startHour}-${startMinute}-00`
+    let data = {
+      start_date: date,
+      interval: interval,
+      email_to: emailTo,
+      alert_predict: alertPredict
+    }
+    if (JobExists) {
+      modifyJobs(data)
+        .then(res => {
+          console.log(res.data)
+          props.setIsOpen(!props.isOpen)
+        })
+        .catch((e) => {
+          console.log("Algo deu errado!")
+          alert(e.response.data.msg)
+        })
+    } else {
+      scheduleJobs(data)
+        .then(res => {
+          console.log(res.data)
+          props.setIsOpen(!props.isOpen)
+        })
+        .catch(() => {
+          console.log("Algo deu errado!")
+          alert(e.response.data.msg)
+        })
+    }
+  }
 
   return (
 
@@ -35,7 +128,7 @@ export default function Configuracoes(props) {
             <label>Insira o e-mail de destino dos alertas e relatórios periódicos:</label>
           </div>
           <div className="mb-4">
-            <input placeholder="seu_email@dominio.com" />
+            <input placeholder="seu_email@dominio.com" value={emailTo} onChange={(e) => setEmailTo(e.target.value)} />
           </div>
 
           <div className="mb-1">
@@ -43,13 +136,13 @@ export default function Configuracoes(props) {
           </div>
           <div className="mb-4">
 
-            <select className="me-2" value={"12"} onChange={e => { }}>
+            <select className="me-2" value={startHour} onChange={e => setStartHour(e.target.value)}>
               {[...Array(24).keys()].map(i =>
                 <option value={String(i).padStart(2, '0')}>{String(i).padStart(2, '0')} h</option>
               )}
             </select>
 
-            <select value={"00"} onChange={e => { }}>
+            <select value={startMinute} onChange={e => setStartMinute(e.target.value)}>
               <option value={"00"}>00 min</option>
               <option value={"20"}>30 min</option>
             </select>
@@ -58,11 +151,11 @@ export default function Configuracoes(props) {
             <label>Disparar relatório a cada:</label>
           </div>
           <div className="mb-4">
-            <select value={6} onChange={e => { }}>
-              <option value={6}>6 horas</option>
-              <option value={12}>12 horas</option>
-              <option value={24}>24 horas</option>
-              <option value={168}>1 semana</option>
+            <select value={interval} onChange={e => setInterval(e.target.value)}>
+              <option value={"6"}>6 horas</option>
+              <option value={"12"}>12 horas</option>
+              <option value={"24"}>24 horas</option>
+              <option value={"168"}>1 semana</option>
             </select>
           </div>
 
@@ -70,8 +163,8 @@ export default function Configuracoes(props) {
           <div className="switch-container mb-4">
             <div className="switch-flex">
               <div className="onoffswitch me-2">
-                <input type="checkbox" name="onoffswitch" className="onoffswitch-checkbox" id="myonoffswitch" tabIndex="0" checked={isChecked} onChange={() => setIsChecked(!isChecked)} />
-                <label className="onoffswitch-label" for="myonoffswitch">
+                <input type="checkbox" name="onoffswitch" className="onoffswitch-checkbox" id="myonoffswitch" tabIndex={0} checked={alertPredict} onChange={() => setAlertPredict(!alertPredict)} />
+                <label className="onoffswitch-label" htmlFor="myonoffswitch">
                   <span className="onoffswitch-inner"></span>
                   <span className="onoffswitch-switch"></span>
                 </label>
@@ -94,39 +187,53 @@ export default function Configuracoes(props) {
                 <div>
                   <label className="form-semibold">Consumo de CPU:</label>
                 </div>
-                <div className="input-wrapper">
-                  <div className="input-wrapper-row">
-                    <div className="input-wrapper-input" contentEditable="true"
-                      spellCheck="false" onFocus={e => setStyle(e)} onBlur={e => disableStyle(e)}>75</div>
-                    <div>%</div>
-                  </div>
-                </div>
+                <CurrencyInput
+                  className="cpu"
+                  id="input-example"
+                  name="input-name"
+                  suffix=" %"
+                  value={cpu}
+                  disableGroupSeparators={true}
+
+                  maxLength={3}
+                  step={1}
+                  onValueChange={(value, name) => setCpu(value)}
+                />
               </div>
 
               <div className="col p-0">
                 <div>
                   <label className="form-semibold">Consumo de RAM:</label>
                 </div>
-                <div className="input-wrapper">
-                  <div className="input-wrapper-row">
-                    <div className="input-wrapper-input" contentEditable="true"
-                      spellCheck="false" onFocus={e => setStyle(e)} onBlur={e => disableStyle(e)}>50</div>
-                    <div>%</div>
-                  </div>
-                </div>
+                <CurrencyInput
+                  className="ram"
+                  id="input-example"
+                  name="input-name"
+                  suffix=" %"
+                  value={ram}
+                  disableGroupSeparators={true}
+
+                  maxLength={3}
+                  step={1}
+                  onValueChange={(value, name) => setRam(value)}
+                />
               </div>
 
               <div className="col p-0">
                 <div>
                   <label className="form-semibold">Tempo de Resposta:</label>
                 </div>
-                <div className="input-wrapper">
-                  <div className="input-wrapper-row">
-                    <div className="input-wrapper-input" contentEditable="true"
-                      spellCheck="false" onFocus={e => setStyle(e)} onBlur={e => disableStyle(e)}>200</div>
-                    <div>ms</div>
-                  </div>
-                </div>
+                <NumberFormat
+                  defaultValue={responseTime}
+                  className="request-count"
+                  suffix=" req/s"
+                  displayType="input"
+                  decimalScale={0}
+                  // type="text"
+                  thousandSeparator={false}
+                  // isAllowed={({ floatValue }) => floatValue <= 1000}
+                  onValueChange={(values) => setResponseTime(Number(values.value))}
+                />
               </div>
             </div>
 
@@ -135,26 +242,37 @@ export default function Configuracoes(props) {
                 <div>
                   <label className="form-semibold">Número de Requisições:</label>
                 </div>
-                <div className="input-wrapper">
+                <NumberFormat
+                  defaultValue={requestCount}
+                  className="request-count"
+                  suffix=" req/s"
+                  displayType="input"
+                  decimalScale={0}
+                  // type="text"
+                  thousandSeparator={false}
+                  isAllowed={responseTimeLimit}
+                  onValueChange={(values) => setRequestCount(Number(values.value))}
+                />
+                {/* <div className="input-wrapper">
                   <div className="input-wrapper-row">
-                    <div className="input-wrapper-input" contentEditable="true"
-                      spellCheck="false" onFocus={e => setStyle(e)} onBlur={e => disableStyle(e)}>30</div>
+                    <div className="input-wrapper-input" contentEditable="true" id="cpu_alert"
+                      spellCheck="false" onFocus={e => setStyle(e)} onBlur={e => disableStyle(e)} onKeyUp={e => console.log(document.getElementById("cpu_alert").innerText)}>{requestCount}</div>
                     <div>req/s</div>
                   </div>
-                </div>
+                </div> */}
               </div>
-
             </div>
           </div>
 
           <div className="form-menu-container">
             <div className="form-menu-row" >
-              <button className="btn-green" type="submit">Salvar</button>
+              <button className="btn-green" type="submit" onClick={e => salvar(e)}>Salvar</button>
             </div>
             <div className="form-menu-row" >
               <button className="btn-black" onClick={e => { props.setIsOpen(!props.isOpen) }}>Cancelar</button>
             </div>
           </div>
+
         </form>
 
       </div >

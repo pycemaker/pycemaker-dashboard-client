@@ -152,3 +152,19 @@
   background: #15ED48;
   color: #000;
 }
+
+.cpu {
+  max-width: 4rem;
+}
+
+.ram {
+  max-width: 4rem;
+}
+
+.time-response {
+  max-width: 5rem;
+}
+
+.request-count {
+  max-width: 6rem;
+}

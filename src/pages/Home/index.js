@@ -6,6 +6,7 @@ import HorizontalCard from "../../components/HorizontalCard";
 import VerticalCard from "../../components/VerticalCard";
 import MenuDash from "../../components/MenuDash";
 import ZoomChart from "../../components/ZoomChart";
+import HorizontalCard2 from "../../components/HorizontalCard2";
 
 export default function Home() {
 
@@ -178,6 +179,55 @@ export default function Home() {
                   tickFormatter={fixedToInt}
                   domain={[0, 1]}
                   chart="cpu"
+                  setChart={setChart}
+                  showComponent={showComponent}
+                  setShowComponent={setShowComponent}
+                />
+              </div>
+
+
+              <div className="card border-0 shadow p-4 mt-5 mb-5 bg-white rounded">
+                <HorizontalCard2
+                  title="Consumo de CPU"
+                  measure="%"
+                  isPercentage={false}
+                  getData={getCpu}
+                  getDataNow={getCpuNow}
+                  dateNow={formartDate(dateNow)}
+                  dateStart={formartDate(dateStart)}
+                  playInterval={playInterval}
+                  setPlayInterval={setPlayInterval}
+                  observer={playInterval}
+                  setObserver={setPlayInterval}
+                  timeRange={timeRange}
+                  colorFill={"#15ED48"}
+                  tickFormatter={fixedToInt}
+                  domain={[0, 1]}
+                  chart="cpu"
+                  setChart={setChart}
+                  showComponent={showComponent}
+                  setShowComponent={setShowComponent}
+                />
+              </div>
+
+              <div className="card border-0 shadow p-4 mt-5 mb-5 bg-white rounded">
+                <HorizontalCard2
+                  title="Consumo de RAM"
+                  measure="%"
+                  isPercentage={true}
+                  getData={getRam}
+                  getDataNow={getRamNow}
+                  dateNow={formartDate(dateNow)}
+                  dateStart={formartDate(dateStart)}
+                  playInterval={playInterval}
+                  setPlayInterval={setPlayInterval}
+                  observer={playInterval}
+                  setObserver={setPlayInterval}
+                  timeRange={timeRange}
+                  colorFill={"#9357FF"}
+                  tickFormatter={fixedToInt}
+                  domain={[0, 100]}
+                  chart="ram"
                   setChart={setChart}
                   showComponent={showComponent}
                   setShowComponent={setShowComponent}
