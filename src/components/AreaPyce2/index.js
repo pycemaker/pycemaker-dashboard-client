@@ -43,7 +43,7 @@ export default function AreaPyce2(props) {
   const [playInterval, setPlayInterval] = useState(false)
   const [reset, setReset] = useState(true)
   const [countIndex, setCountIndex] = useState()
-  const [isNoData, setIsNoData] = useState(true)
+  const [isLoading, setIsLoading] = useState(true)
 
   const [data, setData] = useState([])
 
@@ -73,10 +73,6 @@ export default function AreaPyce2(props) {
     }
   }, playInterval ? 3000 : null);
 
-  // useEffect(() => {
-  //   console.log(data)
-  // }, [data])
-
   async function getData() {
     try {
       let res = await getCpuPrediction(formartDate(new Date()))
@@ -85,25 +81,18 @@ export default function AreaPyce2(props) {
       // setTimeout(function () {
       setPlayInterval(true)
       // }, 2000);
-      setIsNoData(false)
+      setIsLoading(false)
     } catch {
       console.log("Algo deu errado!")
-      setIsNoData(true)
+      setIsLoading(true)
     }
   }
-
-  // useEffect(() => {
-  //   if (reset) {
-  //     getData()
-  //   }
-  // }, [reset])
 
   useEffect(() => {
     if (props.observer === true) {
       getData()
     } else {
       setPlayInterval(false)
-      // setIsNoData(true)
     }
   }, [props.observer, reset])
 
@@ -127,7 +116,6 @@ export default function AreaPyce2(props) {
     );
   };
 
-
   const formatter = (value, name, isPercentage) => {
     if (value.length > 0) {
       let novo = value
@@ -138,24 +126,9 @@ export default function AreaPyce2(props) {
     }
   }
 
-  // if (isNoData) {
-  //   return (
-  //     <div
-  //       style={{
-  //         height: "300px",
-  //         display: "flex",
-  //         alignItems: "center",
-  //         justifyContent: "center"
-  //       }}
-  //     >
-  //       No Data
-  //     </div>
-  //   )
-  // }
-
   return (
     <>
-      {isNoData &&
+      {isLoading &&
         <div
           style={{
             height: "300px",
@@ -164,10 +137,10 @@ export default function AreaPyce2(props) {
             justifyContent: "center"
           }}
         >
-          No Data
+          <div className="lds-facebook"><div></div><div></div><div></div></div>
         </div>
       }
-      {!isNoData &&
+      {!isLoading &&
         <ResponsiveContainer
           width={props.width}
           height={props.height}
@@ -198,25 +171,18 @@ export default function AreaPyce2(props) {
               padding={{ bottom: 1 }}
               domain={[0, 1]}
               allowDataOverflow={true}
-              tickCount={6}
+              tickCount={props.ticks}
             />
             <Tooltip formatter={formatter} labelFormatter={dateFormatter} />
-            {/* <ReferenceLine x={refX} stroke="green" label="Min PAGE" /> */}
-            {/* <Legend iconType="rect" fill={props.colorFill} stroke={props.colorFill} layout="horizontal" verticalAlign="top" align="right" wrapperStyle={{
-            paddingBottom: "20px"
-          }} /> */}
-            {/* <Legend /> */}
             <Area
               isAnimationActive={false}
               type=""
               dataKey="predict_range"
               stroke=""
               strokeWidth={1.5}
-              // strokeOpacity={0}
               fill={props.colorFill}
               fillOpacity={0.4}
               activeDot={false}
-            // activeDot={{ stroke: 'black', fill: "white", strokeWidth: 1.5, r: 5 }}
             />
             <Line
               isAnimationActive={false}
@@ -227,7 +193,6 @@ export default function AreaPyce2(props) {
               dot={false}
               fill={"#15ED48"}
               activeDot={false}
-            // activeDot={{ stroke: 'black', fill: "white", strokeWidth: 1.5, r: 5 }}
             />
             <Line
               isAnimationActive={false}
@@ -244,5 +209,5 @@ export default function AreaPyce2(props) {
         </ResponsiveContainer>
       }
     </>
-  );
+  )
 }

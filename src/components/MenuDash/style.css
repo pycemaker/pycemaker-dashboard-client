@@ -7,16 +7,27 @@
   display: flex;
 }
 
+.display-icon>img {
+  width: 100%;
+  height: 100%;
+}
+
 .display-icon:hover {
   transform: scale(1.09);
 }
 
 .display-icon a {
+  /* display: block; */
   color: #000000;
   font-size: 1.8em;
   font-weight: bold;
   text-decoration: none;
   text-transform: uppercase;
+}
+
+
+.display-icon a>span {
+  vertical-align: top;
   padding-left: 10px;
 }
 
@@ -24,7 +35,7 @@
   color: #000000;
 }
 
-.display-icon:hover>img {
+.display-icon:hover>a>img {
   filter: hue-rotate(360deg);
   transition: all 1s ease-in-out 0s;
 }
@@ -61,6 +72,8 @@
 }
 
 .display-button-play {
+  display: flex;
+  justify-content: center;
   background: #FFF;
   border-radius: 20px;
   padding: 5px;
@@ -69,7 +82,9 @@
   font-family: "Outfit", sans-serif;
   font-weight: bold;
   border: 1px solid #15ED48;
-  margin-left: 10px;
+  align-items: center;
+  /* margin-left: 10px; */
+  background-color: #15ED48;
 }
 
 .display-button-play:hover {
@@ -78,6 +93,8 @@
 }
 
 .display-button-stop {
+  display: flex;
+  justify-content: center;
   background: #FFF;
   border-radius: 20px;
   padding: 5px;
@@ -86,7 +103,9 @@
   font-family: "Outfit", sans-serif;
   font-weight: bold;
   border: 1px solid #ED1556;
-  margin-left: 10px;
+  align-items: center;
+  /* margin-left: 10px; */
+  background-color: #ED1556;
 }
 
 .display-button-stop:hover {
@@ -98,4 +117,121 @@
   font-family: "Outfit", sans-serif;
   font-size: 1em;
   font-weight: 700;
+}
+
+.display-select select {
+  /* margin-right: 50px; */
+  border-radius: 20px;
+  border: 1px solid #000000;
+  padding: 5px;
+  padding-right: 10px;
+  padding-left: 10px;
+  font-family: "Outfit", sans-serif;
+  font-weight: bold;
+  /* margin-right: 10px; */
+}
+
+.display-conf button {
+  background: #FFF;
+  border-radius: 20px;
+  border: 1px solid #000000;
+  padding: 5px;
+  padding-right: 10px;
+  padding-left: 10px;
+  font-family: "Outfit", sans-serif;
+  font-weight: bold;
+}
+
+.display-button-play-icon {
+  display: flex;
+  justify-content: center;
+  background: #FFF;
+  border-radius: 20px;
+  padding: 10px;
+  padding-right: 10px;
+  padding-left: 10px;
+  font-family: "Outfit", sans-serif;
+  font-weight: bold;
+  border: 1px solid #15ED48;
+  align-items: center;
+  /* width: 40px; */
+  height: 30px;
+  /* margin-left: 10px; */
+  background-color: #15ED48;
+}
+
+.display-button-play-icon:hover {
+  background: #15ED48;
+  color: #000;
+}
+
+.display-button-stop-icon {
+  display: flex;
+  justify-content: center;
+  background: #FFF;
+  border-radius: 20px;
+  padding: 10px;
+  padding-right: 10px;
+  padding-left: 10px;
+  font-family: "Outfit", sans-serif;
+  font-weight: bold;
+  border: 1px solid #ED1556;
+  align-items: center;
+  /* width: 40px; */
+  height: 30px;
+  /* margin-left: 10px; */
+  /* color: #717171; */
+  background-color: #ED1556;
+}
+
+.display-button-stop-icon:hover {
+  background: #ED1556;
+  color: #FFF;
+}
+
+.display-time-icon select {
+  display: flex;
+  justify-content: center;
+  background: #FFF;
+  border-radius: 20px;
+  /* padding-right: 10px; */
+  padding-left: 5px;
+  font-family: "Outfit", sans-serif;
+  font-weight: bold;
+  border: 1px solid #000;
+  align-items: center;
+  /* width: 40px; */
+  height: 30px;
+  /* margin-right: 10px; */
+  font-weight: 600;
+  /* color: #717171; */
+  /* background-color: #9357FF; */
+}
+
+.display-settings-icon {
+  display: flex;
+  justify-content: center;
+  background: #FFF;
+  padding: 10px;
+  border-radius: 20px;
+  padding-right: 10px;
+  padding-left: 10px;
+  font-family: "Outfit", sans-serif;
+  font-weight: bold;
+  border: 1px solid #000;
+  align-items: center;
+  /* width: 40px; */
+  height: 30px;
+  /* margin-left: 10px; */
+  /* color: #717171; */
+  /* background-color: #FFF73A; */
+}
+
+.display-icon-resize {
+  /* width: 100%; */
+  height: 60px;
+}
+
+.display-icon-font-resize {
+  font-size: 24px;
 }

@@ -18,7 +18,7 @@ export default function VerticalCard(props) {
         width="100%"
         height={270} />
       <div className="row mt-3">
-        <div className="col-sm">
+        <div className="col-md-12 col-xl-6">
           <div className="pb-3">
             <span className="component_title1">Níveis de Consumo</span>
           </div>
@@ -27,7 +27,7 @@ export default function VerticalCard(props) {
             width="100%"
             height={250} />
         </div>
-        <div className="col-sm">
+        <div className="col-md-12 col-xl-6">
           <Report
             {...props}
           />

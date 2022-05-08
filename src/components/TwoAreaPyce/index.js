@@ -8,9 +8,9 @@ import {
   Tooltip,
   ResponsiveContainer
 } from "recharts";
-import { dateFormatter, formatPercentage } from "../../utils/formatters";
+import { dateFormatter } from "../../utils/formatters";
 
-export default function AreaPyce(props) {
+export default function TwoAreaPyce(props) {
 
   const [data, setData] = useState([])
   // const [isLoading, setIsLoading] = useState(true)
@@ -35,7 +35,7 @@ export default function AreaPyce(props) {
       updateArray()
     }, 3000)
     return () => clearInterval(interval);
-  }, [props.playInterval])
+  }, [props.playInterval, props.dateStart])
 
   const CustomizedAxisTick: FunctionComponent<any> = (props: any) => {
     const { x, y, payload } = props;
@@ -56,8 +56,9 @@ export default function AreaPyce(props) {
     );
   };
 
-  const formatter = (value, name, isPercentage) => {
-    return [formatPercentage(value, props.isPercentage), name, props]
+  const tickFormatter = props.tickFormatter
+  const formatter = (value, name) => {
+    return [tickFormatter(value), name, props]
   }
 
   return (
@@ -103,16 +104,29 @@ export default function AreaPyce(props) {
               axisLine={false}
               tickLine={false}
               padding={{ bottom: 1 }}
-              domain={props.domain} />
+              />
             <Tooltip formatter={formatter} labelFormatter={dateFormatter} />
             <Area
               isAnimationActive={false}
+              stackId="1"
               type=""
-              dataKey="value"
-              stroke="black"
+              dataKey="heap"
+              stroke={props.colorFill[0]}
               strokeWidth={1.5}
-              fill={props.colorFill}
-              fillOpacity={1}
+              fill={props.colorFill[0]}
+              fillOpacity={0.4}
+              dot={{ fill: "white" }}
+              activeDot={{ stroke: 'black', fill: "white", strokeWidth: 1.5, r: 5 }}
+            />
+            <Area
+              isAnimationActive={false}
+              stackId="1"
+              type=""
+              dataKey="nonheap"
+              stroke={props.colorFill[1]}
+              strokeWidth={1.5}
+              fill={props.colorFill[1]}
+              fillOpacity={0.4}
               dot={{ fill: "white" }}
               activeDot={{ stroke: 'black', fill: "white", strokeWidth: 1.5, r: 5 }}
             />

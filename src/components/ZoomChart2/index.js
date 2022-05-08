@@ -1,10 +1,10 @@
 import React from "react";
-import AreaPyce2 from "../AreaPyce2";
+import TwoAreaPyce from "../TwoAreaPyce";
 import { ReactComponent as BackIcon } from '../../assets/back.svg';
 import { ReactComponent as ResetIcon } from '../../assets/reset.svg';
 import "./style.css"
 
-export default function ZoomChart(props) {
+export default function ZoomChart2(props) {
 
 
   return (
@@ -22,10 +22,10 @@ export default function ZoomChart(props) {
             </button>
           </div>
         </div>
-        <div className="zoom-title component_title1">{props.title}</div>
+        <div className="zoom-title component_title1">{props.titles[0]}</div>
       </div>
       <div>
-        <AreaPyce2
+        <TwoAreaPyce
           {...props}
           ticks={11}
           width="100%"

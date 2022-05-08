@@ -7,7 +7,6 @@ import { ReactComponent as ExpandIcon } from '../../assets/expand.svg';
 export default function HorizontalCard2(props) {
 
   return (
-    // <div className="card border-0 shadow p-4 bg-white rounded">
     <div className="row">
       <div className="col-sm-3">
         <div className="pb-3">
@@ -34,6 +33,5 @@ export default function HorizontalCard2(props) {
         />
       </div>
     </div>
-    // </div>
   )
 }

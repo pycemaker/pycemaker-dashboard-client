@@ -1,28 +1,57 @@
 import React, { useEffect, useState } from "react";
-import { getCpu, getCpuNow, getRam, getRamNow } from "../../services/api";
-import { fixedToInt, formartDate } from "../../utils/formatters";
+import { getCpu, getCpuNow, getHeapNow, getNonheapNow, getRam, getRamDetailsNow, getRamNow } from "../../services/api";
+import { fixedToInt, fixedToIntWithouPercentage, formartDate, formatToMegabytes } from "../../utils/formatters";
 import Configuracoes from "../../components/Configuracoes";
 import HorizontalCard from "../../components/HorizontalCard";
 import VerticalCard from "../../components/VerticalCard";
 import MenuDash from "../../components/MenuDash";
 import ZoomChart from "../../components/ZoomChart";
 import HorizontalCard2 from "../../components/HorizontalCard2";
+import VerticalCard2 from "../../components/VerticalCard2";
+import ZoomChart2 from "../../components/ZoomChart2";
 
 export default function Home() {
 
+  // const [timeRange, setTimeRange] = useState(900)
   const [timeRange, setTimeRange] = useState(168)
   const [isOpen, setIsOpen] = useState(false)
   const [playInterval, setPlayInterval] = useState(true)
 
-  const dateNow = new Date()
+  // const dateNow = new Date()
 
-  let dateStart = new Date(dateNow)
-  dateStart = new Date(dateStart.setHours(dateStart.getHours() - timeRange))
+  // let dateStart = new Date(dateNow)
+  // dateStart = new Date(dateStart.setHours(dateStart.getHours() - timeRange))
+
 
   useEffect(() => {
-    // console.log(timeRange)
+    console.log(timeRange)
     setPlayInterval(true)
   }, [timeRange])
+
+
+  const [dateNow, setDateNow] = useState(new Date())
+  let date = new Date(dateNow)
+  date = new Date(date.setHours(date.getHours() - timeRange))
+  const [dateStart, setDateStart] = useState(date)
+
+  useEffect(() => {
+    console.log(dateStart)
+  }, [dateStart])
+
+  useEffect(() => {
+    console.log(dateNow)
+    let date = new Date(dateNow)
+    date = new Date(date.setHours(date.getHours() - timeRange))
+    setDateStart(date)
+    setPlayInterval(true)
+  }, [dateNow])
+
+  useEffect(() => {
+    console.log(dateStart)
+    // let date = new Date(dateNow)
+    // date = new Date(date.setHours(date.getHours() - timeRange))
+    // setDateStart(date)
+  }, [])
 
 
   if (isOpen) {
@@ -43,7 +72,7 @@ export default function Home() {
       {isOpen &&
         <Configuracoes setIsOpen={setIsOpen} isOpen={isOpen} />
       }
-      <div className="container">
+      <div className="container pb-5">
         <div className="justify-content-center">
           <MenuDash
             isOpen={isOpen}
@@ -78,6 +107,7 @@ export default function Home() {
               setChart={setChart}
               showComponent={showComponent}
               setShowComponent={setShowComponent}
+              setDateNow={setDateNow}
             />
           }
 
@@ -106,9 +136,39 @@ export default function Home() {
             />
           }
 
+          {
+            chart === 'ramdetails' && !showComponent &&
+            <ZoomChart2
+              titles={
+                [
+                  "Consumo de RAM (Detalhes)",
+                  "Consumo Heap",
+                  "Consumo Non-Heap"
+                ]
+              }
+              measure="%"
+              // getData={getRamDetails}
+              getDataNow={getRamDetailsNow}
+              // dateNow={formartDate(dateNow)}
+              dateStart={formartDate(dateStart)}
+              playInterval={playInterval}
+              setPlayInterval={setPlayInterval}
+              // observer={playInterval}
+              // setObserver={setPlayInterval}
+              // timeRange={timeRange}
+              colorFill={["#D413AA", "#FFF73A"]}
+              tickFormatter={formatToMegabytes}
+              chart="ramdetails"
+              setChart={setChart}
+              // showComponent={showComponent}
+              setShowComponent={setShowComponent}
+              setDateNow={setDateNow}
+            />
+          }
+
 
           {
-            chart === 'reponsetime' && !showComponent &&
+            chart === 'responsetime' && !showComponent &&
             <ZoomChart
               title="Tempo de Resposta"
               measure="ms"
@@ -225,7 +285,7 @@ export default function Home() {
                   setObserver={setPlayInterval}
                   timeRange={timeRange}
                   colorFill={"#9357FF"}
-                  tickFormatter={fixedToInt}
+                  tickFormatter={fixedToIntWithouPercentage}
                   domain={[0, 100]}
                   chart="ram"
                   setChart={setChart}
@@ -234,56 +294,66 @@ export default function Home() {
                 />
               </div>
 
-
-
-              <div className="card-group">
-                <div className="card me-3 border-0 shadow bg-white rounded p-4">
-                  <VerticalCard
-                    title="Consumo de RAM"
-                    measure="%"
-                    isPercentage={true}
-                    getData={getRam}
-                    getDataNow={getRamNow}
-                    dateNow={formartDate(dateNow)}
-                    dateStart={formartDate(dateStart)}
-                    playInterval={playInterval}
-                    setPlayInterval={setPlayInterval}
-                    observer={playInterval}
-                    setObserver={setPlayInterval}
-                    timeRange={timeRange}
-                    colorFill={"#9357FF"}
-                    tickFormatter={fixedToInt}
-                    domain={[0, 100]}
-                    chart="ram"
-                    setChart={setChart}
-                    showComponent={showComponent}
-                    setShowComponent={setShowComponent}
-                  />
+              {/* <div className="container"> */}
+              <div className="row row-cols-1 row-cols-md-1 row-cols-lg-2 gy-5">
+                {/* <div className="row gy-5"> */}
+                <div className="col">
+                  <div className="card h-100 border-0 shadow bg-white rounded p-4">
+                    <VerticalCard
+                      title="Consumo de RAM"
+                      measure="%"
+                      isPercentage={true}
+                      getData={getRam}
+                      getDataNow={getRamNow}
+                      dateNow={formartDate(dateNow)}
+                      dateStart={formartDate(dateStart)}
+                      playInterval={playInterval}
+                      setPlayInterval={setPlayInterval}
+                      observer={playInterval}
+                      setObserver={setPlayInterval}
+                      timeRange={timeRange}
+                      colorFill={"#9357FF"}
+                      tickFormatter={fixedToInt}
+                      domain={[0, 100]}
+                      chart="ram"
+                      setChart={setChart}
+                      showComponent={showComponent}
+                      setShowComponent={setShowComponent}
+                    />
+                  </div>
                 </div>
-                <div className="card ms-3 border-0 shadow bg-white rounded p-4">
-                  <VerticalCard
-                    title="Consumo de RAM (Detalhes"
-                    measure="%"
-                    isPercentage={true}
-                    getData={getRam}
-                    getDataNow={getRamNow}
-                    dateNow={formartDate(dateNow)}
-                    dateStart={formartDate(dateStart)}
-                    playInterval={playInterval}
-                    setPlayInterval={setPlayInterval}
-                    observer={playInterval}
-                    setObserver={setPlayInterval}
-                    timeRange={timeRange}
-                    colorFill={"#9357FF"}
-                    tickFormatter={fixedToInt}
-                    domain={[0, 100]}
-                    chart="ram"
-                    setChart={setChart}
-                    showComponent={showComponent}
-                    setShowComponent={setShowComponent}
-                  />
+                <div className="col">
+                  <div className="card h-100 border-0 shadow bg-white rounded p-4">
+                    <VerticalCard2
+                      titles={
+                        [
+                          "Consumo de RAM (Detalhes)",
+                          "Consumo Heap",
+                          "Consumo Non-Heap"
+                        ]
+                      }
+                      measure="MB"
+                      // getData={getRamDetails}
+                      getDataNow={[getRamDetailsNow, getHeapNow, getNonheapNow]}
+                      // dateNow={formartDate(dateNow)}
+                      dateStart={formartDate(dateStart)}
+                      playInterval={playInterval}
+                      setPlayInterval={setPlayInterval}
+                      // observer={playInterval}
+                      // setObserver={setPlayInterval}
+                      // timeRange={timeRange}
+                      colorFill={["#D413AA", "#FFF73A", "#E7E7E7"]}
+                      tickFormatter={formatToMegabytes}
+                      chart="ramdetails"
+                      setChart={setChart}
+                      // showComponent={showComponent}
+                      setShowComponent={setShowComponent}
+                    />
+                  </div>
                 </div>
               </div>
+              {/* </div> */}
+
               <div className="card border-0 shadow p-4 mt-5 mb-5 bg-white rounded">
                 <HorizontalCard
                   title="Tempo de Resposta"
@@ -307,6 +377,7 @@ export default function Home() {
                   setShowComponent={setShowComponent}
                 />
               </div>
+
               <div className="card border-0 shadow p-4 mt-5 mb-5 bg-white rounded">
                 <HorizontalCard
                   title="Número de Requisições"
@@ -331,9 +402,9 @@ export default function Home() {
                 />
               </div>
 
-              <div className="p-2">
+              {/* <div className="p-2">
 
-              </div>
+              </div> */}
             </>
           }
 

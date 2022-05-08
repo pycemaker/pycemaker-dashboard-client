@@ -50,7 +50,7 @@
 }
 
 .minus {
-  color: #D413AA;
+  color: #ED1556;
 }
 
 .font-13 {
@@ -63,4 +63,8 @@
 
 .font-26 {
   font-size: 26pt;
+}
+
+.background-grey {
+  background: #E6E6E6;
 }

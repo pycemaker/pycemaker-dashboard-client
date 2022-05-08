@@ -104,7 +104,7 @@ export default function AreaPyce2(props) {
       setReset(!reset)
     }
 
-  }, playInterval ? 1000 : null);
+  }, playInterval ? 3000 : null);
 
 
   // useEffect(() => {

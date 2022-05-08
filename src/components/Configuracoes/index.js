@@ -1,13 +1,11 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { getJobsData, modifyJobs, scheduleJobs } from "../../services/api";
 import './style.css'
-import styled from "styled-components";
 import CurrencyInput from 'react-currency-input-field';
 import NumberFormat from 'react-number-format';
-
+import { ReactComponent as CloseIcon } from '../../assets/close.svg';
 
 export default function Configuracoes(props) {
-
 
   const [alertPredict, setAlertPredict] = useState(false)
   const [emailTo, setEmailTo] = useState("")
@@ -19,19 +17,6 @@ export default function Configuracoes(props) {
   const [ram, setRam] = useState(50)
   const [responseTime, setResponseTime] = useState(200)
   const [requestCount, setRequestCount] = useState(30)
-
-
-  // function setStyle(e) {
-  //   // e = document.getElementById("cpu-consume")
-  //   e.target.parentNode.style.outline = '1px solid #000';
-  //   e.target.parentNode.style.transform = 'scale(1.09)';
-  // };
-
-  // function disableStyle(e) {
-  //   // e = document.getElementById("cpu-consume")
-  //   e.target.parentNode.style.outline = 'none';
-  //   e.target.parentNode.style.transform = 'scale(1)';
-  // };
 
   useEffect(() => {
     getJobsData()
@@ -47,6 +32,7 @@ export default function Configuracoes(props) {
             }
           }
           console.log(data)
+
           let index = findIndex(data, "job_name", "report")
 
           setEmailTo(data[index].email_to)
@@ -69,7 +55,6 @@ export default function Configuracoes(props) {
         alert(e.response.data.msg)
       })
   }, [])
-
 
   const responseTimeLimit = (inputObj) => {
     const { value } = inputObj;
@@ -113,13 +98,12 @@ export default function Configuracoes(props) {
   }
 
   return (
-
-
     <div className="display-modal-container">
       <div className="card display-modal-form shadow">
 
-        <div className="mb-5">
+        <div className="form-title-container mb-5">
           <div className="form-title">Configurações do Monitoramento</div>
+          <button onClick={e => { props.setIsOpen(!props.isOpen) }}><CloseIcon /></button>
         </div>
 
         <form>
@@ -127,6 +111,7 @@ export default function Configuracoes(props) {
           <div className="mb-1">
             <label>Insira o e-mail de destino dos alertas e relatórios periódicos:</label>
           </div>
+
           <div className="mb-4">
             <input placeholder="seu_email@dominio.com" value={emailTo} onChange={(e) => setEmailTo(e.target.value)} />
           </div>
@@ -134,6 +119,7 @@ export default function Configuracoes(props) {
           <div className="mb-1">
             <label>Defina o horário inicial de disparo do relatório:</label>
           </div>
+
           <div className="mb-4">
 
             <select className="me-2" value={startHour} onChange={e => setStartHour(e.target.value)}>
@@ -147,9 +133,11 @@ export default function Configuracoes(props) {
               <option value={"20"}>30 min</option>
             </select>
           </div>
+
           <div className="mb-1">
             <label>Disparar relatório a cada:</label>
           </div>
+
           <div className="mb-4">
             <select value={interval} onChange={e => setInterval(e.target.value)}>
               <option value={"6"}>6 horas</option>
@@ -158,7 +146,6 @@ export default function Configuracoes(props) {
               <option value={"168"}>1 semana</option>
             </select>
           </div>
-
 
           <div className="switch-container mb-4">
             <div className="switch-flex">
@@ -181,8 +168,8 @@ export default function Configuracoes(props) {
 
           <div className="container mb-4">
 
-
             <div className="row mb-3">
+
               <div className="col p-0">
                 <div>
                   <label className="form-semibold">Consumo de CPU:</label>
@@ -212,7 +199,6 @@ export default function Configuracoes(props) {
                   suffix=" %"
                   value={ram}
                   disableGroupSeparators={true}
-
                   maxLength={3}
                   step={1}
                   onValueChange={(value, name) => setRam(value)}
@@ -229,15 +215,15 @@ export default function Configuracoes(props) {
                   suffix=" req/s"
                   displayType="input"
                   decimalScale={0}
-                  // type="text"
                   thousandSeparator={false}
-                  // isAllowed={({ floatValue }) => floatValue <= 1000}
                   onValueChange={(values) => setResponseTime(Number(values.value))}
                 />
               </div>
+
             </div>
 
             <div className="row">
+
               <div className="col p-0">
                 <div>
                   <label className="form-semibold">Número de Requisições:</label>
@@ -253,15 +239,10 @@ export default function Configuracoes(props) {
                   isAllowed={responseTimeLimit}
                   onValueChange={(values) => setRequestCount(Number(values.value))}
                 />
-                {/* <div className="input-wrapper">
-                  <div className="input-wrapper-row">
-                    <div className="input-wrapper-input" contentEditable="true" id="cpu_alert"
-                      spellCheck="false" onFocus={e => setStyle(e)} onBlur={e => disableStyle(e)} onKeyUp={e => console.log(document.getElementById("cpu_alert").innerText)}>{requestCount}</div>
-                    <div>req/s</div>
-                  </div>
-                </div> */}
               </div>
+
             </div>
+
           </div>
 
           <div className="form-menu-container">
@@ -277,5 +258,5 @@ export default function Configuracoes(props) {
 
       </div >
     </div >
-  );
+  )
 }

@@ -17,11 +17,11 @@ export function getCpuNow(dateStart) {
 }
 
 export function getCpuPrediction(dateStart) {
-  return api.get(`/cpus/${dateStart}`);
+  return api.get(`/cpu_predict/${dateStart}`);
 }
 
 export function getCpuRandom(dateNow) {
-  return api.get(`/cpuss/${dateNow}`);
+  return api.get(`/random/${dateNow}`);
 }
 
 export function getRam(dateNow, timeRange) {
@@ -30,6 +30,22 @@ export function getRam(dateNow, timeRange) {
 
 export function getRamNow(dateStart) {
   return api.get(`/ram/${dateStart}`);
+}
+
+export function getRamDetails(dateNow, timeRange) {
+  return api.get(`/ram_details/${dateNow}/${timeRange}`);
+}
+
+export function getRamDetailsNow(dateStart) {
+  return api.get(`/ram_details/${dateStart}`);
+}
+
+export function getHeapNow(dateStart) {
+  return api.get(`/heap/${dateStart}`);
+}
+
+export function getNonheapNow(dateStart) {
+  return api.get(`/nonheap/${dateStart}`);
 }
 
 export function getDisk(dateNow, timeRange) {

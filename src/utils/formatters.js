@@ -42,3 +42,10 @@ export function fixedToIntWithouPercentage(number) {
 export function formatToMegabytes(bytes) {
   return (bytes / (1024 * 1024)).toFixed(2);
 }
+
+export function bytesToSize(bytes) {
+  var sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
+  if (bytes == 0) return '0 Byte';
+  var i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
+  return Math.round(bytes / Math.pow(1024, i), 2) + ' ' + sizes[i];
+}

@@ -23,7 +23,7 @@
 .display-modal-form {
   background-color: #fefefe;
   /* margin: auto; */
-  padding: 40px 54px;
+  padding: 35px 50px;
   width: 40rem;
   margin-bottom: 80px;
 }
@@ -113,6 +113,7 @@
   margin-top: 50px;
   margin-right: 8rem;
   margin-left: 8rem;
+  padding-bottom: 10px;
   /* width: 35vh; */
 }
 
@@ -167,4 +168,18 @@
 
 .request-count {
   max-width: 6rem;
+}
+
+.form-title-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.form-title-container>button {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  border: 1px solid #000;
 }

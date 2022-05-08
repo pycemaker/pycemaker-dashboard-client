@@ -6,6 +6,7 @@ import './styles/style.css'
 import './styles/scrollbar.css'
 import './styles/switch.css'
 import './styles/pcm-card.css'
+import './styles/loading.css'
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
