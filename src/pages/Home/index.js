@@ -1,19 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { getCpu, getCpuNow, getHeapNow, getNonheapNow, getRam, getRamDetailsNow, getRamNow } from "../../services/api";
-import { fixedToInt, fixedToIntWithouPercentage, formartDate, formatToMegabytes } from "../../utils/formatters";
+import { getCpu, getCpuNow, getRam, getRamNow, getRequestCount, getRequestCountNow, getRespTime, getRespTimeNow } from "../../services/api";
+import { fixedToInt, fixedToIntWithouPercentage, formartDate } from "../../utils/formatters";
 import Configuracoes from "../../components/Configuracoes";
 import HorizontalCard from "../../components/HorizontalCard";
-import VerticalCard from "../../components/VerticalCard";
 import MenuDash from "../../components/MenuDash";
 import ZoomChart from "../../components/ZoomChart";
 import HorizontalCard2 from "../../components/HorizontalCard2";
-import VerticalCard2 from "../../components/VerticalCard2";
-import ZoomChart2 from "../../components/ZoomChart2";
 
 export default function Home() {
 
   // const [timeRange, setTimeRange] = useState(900)
-  const [timeRange, setTimeRange] = useState(168)
+  const [timeRange, setTimeRange] = useState(1)
   const [isOpen, setIsOpen] = useState(false)
   const [playInterval, setPlayInterval] = useState(true)
 
@@ -25,7 +22,8 @@ export default function Home() {
 
   useEffect(() => {
     console.log(timeRange)
-    setPlayInterval(true)
+    setDateNow(new Date())
+    // setPlayInterval(true)
   }, [timeRange])
 
 
@@ -74,6 +72,8 @@ export default function Home() {
       }
       <div className="container pb-5">
         <div className="justify-content-center">
+
+
           <MenuDash
             isOpen={isOpen}
             setIsOpen={setIsOpen}
@@ -82,7 +82,6 @@ export default function Home() {
             timeRange={timeRange}
             setTimeRange={setTimeRange}
           />
-
 
 
           {
@@ -111,6 +110,7 @@ export default function Home() {
             />
           }
 
+
           {
             chart === 'ram' && !showComponent &&
             <ZoomChart
@@ -133,10 +133,12 @@ export default function Home() {
               setChart={setChart}
               showComponent={showComponent}
               setShowComponent={setShowComponent}
+              setDateNow={setDateNow}
             />
           }
 
-          {
+
+          {/* {
             chart === 'ramdetails' && !showComponent &&
             <ZoomChart2
               titles={
@@ -164,14 +166,14 @@ export default function Home() {
               setShowComponent={setShowComponent}
               setDateNow={setDateNow}
             />
-          }
+          } */}
 
 
           {
             chart === 'responsetime' && !showComponent &&
             <ZoomChart
               title="Tempo de Resposta"
-              measure="ms"
+              measure="s"
               isPercentage={true}
               getData={getCpu}
               getDataNow={getCpuNow}
@@ -182,13 +184,14 @@ export default function Home() {
               observer={playInterval}
               setObserver={setPlayInterval}
               timeRange={timeRange}
-              colorFill={"#15ED48"}
-              tickFormatter={fixedToInt}
-              domain={[0, 1]}
+              colorFill={"#FFF73A"}
+              tickFormatter={fixedToIntWithouPercentage}
+              // domain={[0, 1]}
               chart="responsetime"
               setChart={setChart}
               showComponent={showComponent}
               setShowComponent={setShowComponent}
+              setDateNow={setDateNow}
             />
           }
 
@@ -209,18 +212,20 @@ export default function Home() {
               setObserver={setPlayInterval}
               timeRange={timeRange}
               colorFill={"#D413AA"}
-              tickFormatter={fixedToInt}
+              tickFormatter={fixedToIntWithouPercentage}
               domain={[0, 1]}
               chart="requestscount"
               setChart={setChart}
               showComponent={showComponent}
               setShowComponent={setShowComponent}
+              setDateNow={setDateNow}
             />
           }
 
 
           {showComponent &&
             <>
+
               <div className="card border-0 shadow p-4 mt-5 mb-5 bg-white rounded">
                 <HorizontalCard
                   title="Consumo de CPU"
@@ -274,7 +279,7 @@ export default function Home() {
                 <HorizontalCard2
                   title="Consumo de RAM"
                   measure="%"
-                  isPercentage={true}
+                  isPercentage={false}
                   getData={getRam}
                   getDataNow={getRamNow}
                   dateNow={formartDate(dateNow)}
@@ -285,8 +290,8 @@ export default function Home() {
                   setObserver={setPlayInterval}
                   timeRange={timeRange}
                   colorFill={"#9357FF"}
-                  tickFormatter={fixedToIntWithouPercentage}
-                  domain={[0, 100]}
+                  tickFormatter={fixedToInt}
+                  domain={[0, 1]}
                   chart="ram"
                   setChart={setChart}
                   showComponent={showComponent}
@@ -294,9 +299,55 @@ export default function Home() {
                 />
               </div>
 
-              {/* <div className="container"> */}
-              <div className="row row-cols-1 row-cols-md-1 row-cols-lg-2 gy-5">
-                {/* <div className="row gy-5"> */}
+              <div className="card border-0 shadow p-4 mt-5 mb-5 bg-white rounded">
+                <HorizontalCard2
+                  title="Tempo de Resposta"
+                  measure="s"
+                  isPercentage={true}
+                  getData={getRespTime}
+                  getDataNow={getRespTimeNow}
+                  dateNow={formartDate(dateNow)}
+                  dateStart={formartDate(dateStart)}
+                  playInterval={playInterval}
+                  setPlayInterval={setPlayInterval}
+                  observer={playInterval}
+                  setObserver={setPlayInterval}
+                  timeRange={timeRange}
+                  colorFill={"#FFF73A"}
+                  tickFormatter={fixedToIntWithouPercentage}
+                  // domain={[0, 1]}
+                  chart="responsetime"
+                  setChart={setChart}
+                  showComponent={showComponent}
+                  setShowComponent={setShowComponent}
+                />
+              </div>
+
+              <div className="card border-0 shadow p-4 mt-5 mb-5 bg-white rounded">
+                <HorizontalCard2
+                  title="Número de Requisições"
+                  measure=""
+                  isPercentage={true}
+                  getData={getRequestCount}
+                  getDataNow={getRequestCountNow}
+                  dateNow={formartDate(dateNow)}
+                  dateStart={formartDate(dateStart)}
+                  playInterval={playInterval}
+                  setPlayInterval={setPlayInterval}
+                  observer={playInterval}
+                  setObserver={setPlayInterval}
+                  timeRange={timeRange}
+                  colorFill={"#D413AA"}
+                  tickFormatter={fixedToIntWithouPercentage}
+                  // domain={[0, 1]}
+                  chart="requestscount"
+                  setChart={setChart}
+                  showComponent={showComponent}
+                  setShowComponent={setShowComponent}
+                />
+              </div>
+
+              {/* <div className="row row-cols-1 row-cols-md-1 row-cols-lg-2 gy-5">
                 <div className="col">
                   <div className="card h-100 border-0 shadow bg-white rounded p-4">
                     <VerticalCard
@@ -351,60 +402,8 @@ export default function Home() {
                     />
                   </div>
                 </div>
-              </div>
-              {/* </div> */}
-
-              <div className="card border-0 shadow p-4 mt-5 mb-5 bg-white rounded">
-                <HorizontalCard
-                  title="Tempo de Resposta"
-                  measure="ms"
-                  isPercentage={true}
-                  getData={getCpu}
-                  getDataNow={getCpuNow}
-                  dateNow={formartDate(dateNow)}
-                  dateStart={formartDate(dateStart)}
-                  playInterval={playInterval}
-                  setPlayInterval={setPlayInterval}
-                  observer={playInterval}
-                  setObserver={setPlayInterval}
-                  timeRange={timeRange}
-                  colorFill={"#15ED48"}
-                  tickFormatter={fixedToInt}
-                  domain={[0, 1]}
-                  chart="responsetime"
-                  setChart={setChart}
-                  showComponent={showComponent}
-                  setShowComponent={setShowComponent}
-                />
-              </div>
-
-              <div className="card border-0 shadow p-4 mt-5 mb-5 bg-white rounded">
-                <HorizontalCard
-                  title="Número de Requisições"
-                  measure=""
-                  isPercentage={true}
-                  getData={getCpu}
-                  getDataNow={getCpuNow}
-                  dateNow={formartDate(dateNow)}
-                  dateStart={formartDate(dateStart)}
-                  playInterval={playInterval}
-                  setPlayInterval={setPlayInterval}
-                  observer={playInterval}
-                  setObserver={setPlayInterval}
-                  timeRange={timeRange}
-                  colorFill={"#D413AA"}
-                  tickFormatter={fixedToInt}
-                  domain={[0, 1]}
-                  chart="requestscount"
-                  setChart={setChart}
-                  showComponent={showComponent}
-                  setShowComponent={setShowComponent}
-                />
-              </div>
-
-              {/* <div className="p-2">
-
               </div> */}
+
             </>
           }
 
@@ -413,4 +412,3 @@ export default function Home() {
     </div>
   );
 }
-

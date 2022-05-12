@@ -39,6 +39,10 @@ export function fixedToIntWithouPercentage(number) {
   return (number).toFixed(0);
 }
 
+export function fixedToMs(number) {
+  return (number * 1000).toFixed(0);
+}
+
 export function formatToMegabytes(bytes) {
   return (bytes / (1024 * 1024)).toFixed(2);
 }

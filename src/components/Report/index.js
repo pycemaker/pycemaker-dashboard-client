@@ -22,7 +22,7 @@ export default function Report(props) {
         console.log("Algo deu errado!")
         // setIsLoading(true)
       })
-  }, [props.timeRange])
+  }, [props.dateNow])
 
   return (
     <div>

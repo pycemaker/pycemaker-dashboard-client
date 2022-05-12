@@ -32,29 +32,17 @@ export function getRamNow(dateStart) {
   return api.get(`/ram/${dateStart}`);
 }
 
-export function getRamDetails(dateNow, timeRange) {
-  return api.get(`/ram_details/${dateNow}/${timeRange}`);
-}
+// export function getRamDetailsNow(dateStart) {
+//   return api.get(`/ram_details/${dateStart}`);
+// }
 
-export function getRamDetailsNow(dateStart) {
-  return api.get(`/ram_details/${dateStart}`);
-}
+// export function getHeapNow(dateStart) {
+//   return api.get(`/heap/${dateStart}`);
+// }
 
-export function getHeapNow(dateStart) {
-  return api.get(`/heap/${dateStart}`);
-}
-
-export function getNonheapNow(dateStart) {
-  return api.get(`/nonheap/${dateStart}`);
-}
-
-export function getDisk(dateNow, timeRange) {
-  return api.get(`/disk/${dateNow}/${timeRange}`);
-}
-
-export function getDiskNow(dateStart) {
-  return api.get(`/disk/${dateStart}`);
-}
+// export function getNonheapNow(dateStart) {
+//   return api.get(`/nonheap/${dateStart}`);
+// }
 
 export function getRespTime(dateNow, timeRange) {
   return api.get(`/response_time/${dateNow}/${timeRange}`);
@@ -64,16 +52,12 @@ export function getRespTimeNow(dateStart) {
   return api.get(`/response_time/${dateStart}`);
 }
 
-export function getHttpFail(dateNow, timeRange) {
-  return api.get(`/http_fail/${dateNow}/${timeRange}`);
+export function getRequestCount(dateNow, timeRange) {
+  return api.get(`/request_count/${dateNow}/${timeRange}`);
 }
 
-export function getHttpFailNow(dateStart) {
-  return api.get(`/http_fail/${dateStart}`);
-}
-
-export function getReport(dateNow, timeRange) {
-  return api.get(`/report/${dateNow}/${timeRange}`);
+export function getRequestCountNow(dateStart) {
+  return api.get(`/request_count/${dateStart}`);
 }
 
 export function getJobsData() {

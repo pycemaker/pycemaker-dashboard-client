@@ -25,6 +25,7 @@ export default function MenuDash(props) {
 
               <div className="display-time-icon">
                 <select value={props.timeRange} onChange={e => { props.setTimeRange(e.target.value); props.setPlayInterval(false) }}>
+                  <option value={1}>1 h</option>
                   <option value={6}>6 h</option>
                   <option value={12}>12 h</option>
                   <option value={24}>1 d</option>
@@ -67,6 +68,7 @@ export default function MenuDash(props) {
 
               <div className="ps-2 display-select">
                 <select value={props.timeRange} onChange={e => { props.setTimeRange(e.target.value); props.setPlayInterval(false) }}>
+                  <option value={1}>1 hora</option>
                   <option value={6}>6 horas</option>
                   <option value={12}>12 horas</option>
                   <option value={24}>1 dia</option>
