@@ -114,7 +114,7 @@ export default function AreaPyce(props) {
               strokeWidth={1.5}
               fill={props.colorFill}
               fillOpacity={1}
-              dot={{ fill: "white" }}
+              // dot={{ fill: "white" }}
               activeDot={{ stroke: 'black', fill: "white", strokeWidth: 1.5, r: 5 }}
             />
           </AreaChart>

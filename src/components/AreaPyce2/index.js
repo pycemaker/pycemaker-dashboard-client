@@ -202,7 +202,8 @@ export default function AreaPyce2(props) {
               strokeWidth={1.5}
               fill={"#15ED48"}
               fillOpacity={1}
-              dot={{ fill: "white" }}
+              dot={false}
+              // dot={{ fill: "white" }}
               activeDot={{ stroke: 'black', fill: "white", strokeWidth: 1.5, r: 5 }}
             />
           </ComposedChart>

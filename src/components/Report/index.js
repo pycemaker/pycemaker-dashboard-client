@@ -12,10 +12,13 @@ export default function Report(props) {
   useEffect(() => {
     props.getData(props.dateNow, props.timeRange)
       .then(res => {
-        setGrowth(res.data.growth)
-        setMean(res.data.mean)
-        setHigher(res.data.higher)
-        setLower(res.data.lower)
+        if (res.data.data.length > 0) {
+          console.log(res.data)
+          setGrowth(res.data.growth)
+          setMean(res.data.mean)
+          setHigher(res.data.higher)
+          setLower(res.data.lower)
+        }
         // setIsLoading(false)
       })
       .catch(() => {
