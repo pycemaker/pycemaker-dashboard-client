@@ -12,11 +12,11 @@ export function formartDate(date) {
 export function dateFormatter(date) {
   let format = new Date(date)
   let dformat =
-    String(format.getUTCDate()).padStart(2, '0') + "/" +
-    String(format.getUTCMonth() + 1).padStart(2, '0') + " " +
-    String(format.getUTCHours()).padStart(2, '0') + ":" +
-    String(format.getUTCMinutes()).padStart(2, '0') + ":" +
-    String(format.getUTCSeconds()).padStart(2, '0')
+    String(format.getDate()).padStart(2, '0') + "/" +
+    String(format.getMonth() + 1).padStart(2, '0') + " " +
+    String(format.getHours()).padStart(2, '0') + ":" +
+    String(format.getMinutes()).padStart(2, '0') + ":" +
+    String(format.getSeconds()).padStart(2, '0')
   return dformat
 };
 
@@ -39,6 +39,17 @@ export function fixedToIntWithouPercentage(number) {
   return (number).toFixed(0);
 }
 
+export function fixedToMs(number) {
+  return (number * 1000).toFixed(0);
+}
+
 export function formatToMegabytes(bytes) {
   return (bytes / (1024 * 1024)).toFixed(2);
+}
+
+export function bytesToSize(bytes) {
+  var sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
+  if (bytes == 0) return '0 Byte';
+  var i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
+  return Math.round(bytes / Math.pow(1024, i), 2) + ' ' + sizes[i];
 }

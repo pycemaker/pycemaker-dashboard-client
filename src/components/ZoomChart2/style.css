@@ -1,0 +1,23 @@
+.zoom-grid {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+}
+
+.zoom-button {
+  display: flex;
+  justify-content: center;
+  background: #FFF;
+  /* padding: 8px; */
+  border-radius: 50px;
+  font-family: "Outfit", sans-serif;
+  font-weight: bold;
+  border: 1px solid #000;
+  align-items: center;
+  height: 33px;
+  width: 33px;
+}
+
+.zoom-title {
+  display: flex;
+  align-items: center;
+}

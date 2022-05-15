@@ -1,0 +1,33 @@
+*::-webkit-scrollbar {
+  width: 18px;
+}
+
+.pcm-picos::-webkit-scrollbar {
+  width: 18px;
+}
+
+*::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 14px 14px transparent;
+  border: solid 4px transparent;
+  border-radius: 20px;
+}
+
+.pcm-picos::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 14px 14px #c4c4c4;
+  border: solid 4px transparent;
+  border-radius: 20px;
+}
+
+*::-webkit-scrollbar-thumb {
+  width: 10px;
+  box-shadow: inset 0 0 14px 14px #15ed48;
+  border-radius: 20px;
+  border: solid 4px transparent;
+}
+
+.pcm-picos::-webkit-scrollbar-thumb {
+  width: 10px;
+  box-shadow: inset 0 0 14px 14px #15ed48;
+  border-radius: 20px;
+  border: solid 4px transparent;
+}

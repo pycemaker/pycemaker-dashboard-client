@@ -1,0 +1,70 @@
+.pcm-picos {
+  height: 150px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.pcm-picos-rows {
+  display: flex;
+  align-items: center;
+}
+
+.pcm-picos-rows-col-1 {
+  /* flex-grow: 1; */
+  width: 10px;
+  /* min-width: 10px; */
+  /* flex-basis: 30px; */
+  display: flex;
+  align-self: center;
+  align-items: center;
+  justify-content: center;
+  padding-left: 15px;
+  font-size: 25pt;
+  font-weight: bold;
+}
+
+.pcm-picos-rows-col-2 {
+  flex-grow: 1;
+  /* flex-basis: 200px; */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding-left: 20px;
+  font-weight: bold;
+  font-size: 13px;
+}
+
+.pcm-picos-rows-col-3 {
+  width: 110px;
+  /* flex-basis: 200px; */
+  display: flex;
+  align-self: center;
+  align-items: baseline;
+  justify-content: center;
+  font-size: 23pt;
+  font-weight: bold;
+}
+
+.plus {
+  color: #15ED48;
+}
+
+.minus {
+  color: #ED1556;
+}
+
+.font-13 {
+  font-size: 13pt;
+}
+
+.font-bold {
+  font-weight: bold;
+}
+
+.font-26 {
+  font-size: 26pt;
+}
+
+.background-grey {
+  background: #E6E6E6;
+}

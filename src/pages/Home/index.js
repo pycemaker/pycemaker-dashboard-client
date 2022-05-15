@@ -1,32 +1,79 @@
 import React, { useEffect, useState } from "react";
-import { getCpu, getCpuNow, getRam, getRamNow } from "../../services/api";
-import '../../styles/style.css'
+import { getCpu, getCpuNow, getCpuPrediction, getRam, getRamNow, getRamPrediction, getRequestCount, getRequestCountNow, getRespTime, getRespTimeNow } from "../../services/api";
 import { fixedToInt, fixedToIntWithouPercentage, formartDate } from "../../utils/formatters";
-import Configuracoes from "../Configuracoes";
+import Configuracoes from "../../components/Configuracoes";
 import HorizontalCard from "../../components/HorizontalCard";
-import VerticalCard from "../../components/VerticalCard";
 import MenuDash from "../../components/MenuDash";
+import ZoomChart from "../../components/ZoomChart";
+import HorizontalCard2 from "../../components/HorizontalCard2";
 
 export default function Home() {
 
-  const [timeRange, setTimeRange] = useState(168)
+  // const [timeRange, setTimeRange] = useState(900)
+  const [timeRange, setTimeRange] = useState(1)
   const [isOpen, setIsOpen] = useState(false)
   const [playInterval, setPlayInterval] = useState(true)
 
-  const dateNow = new Date()
+  // const dateNow = new Date()
 
-  let dateStart = new Date(dateNow)
-  dateStart = new Date(dateStart.setHours(dateStart.getHours() - timeRange))
+  // let dateStart = new Date(dateNow)
+  // dateStart = new Date(dateStart.setHours(dateStart.getHours() - timeRange))
+
 
   useEffect(() => {
-    console.log(timeRange)
-    setPlayInterval(true)
+    // console.log(timeRange)
+    setDateNow(new Date())
+    // setPlayInterval(true)
   }, [timeRange])
+
+
+  const [dateNow, setDateNow] = useState(new Date())
+  let date = new Date(dateNow)
+  date = new Date(date.setHours(date.getHours() - timeRange))
+  const [dateStart, setDateStart] = useState(date)
+
+  useEffect(() => {
+    // console.log(dateStart)
+  }, [dateStart])
+
+  useEffect(() => {
+    // console.log(dateNow)
+    let date = new Date(dateNow)
+    date = new Date(date.setHours(date.getHours() - timeRange))
+    setDateStart(date)
+    setPlayInterval(true)
+  }, [dateNow])
+
+  useEffect(() => {
+    // console.log(dateStart)
+    // let date = new Date(dateNow)
+    // date = new Date(date.setHours(date.getHours() - timeRange))
+    // setDateStart(date)
+  }, [])
+
+
+  if (isOpen) {
+    // document.documentElement.style.getPropertyValue('--scroll-y');
+    const body = document.body;
+    body.style.overflowY = 'hidden';
+  } else {
+    // document.documentElement.style.getPropertyValue('--scroll-y');
+    const body = document.body;
+    body.style.overflowY = 'scroll';
+  }
+
+  const [showComponent, setShowComponent] = useState(true);
+  const [chart, setChart] = useState("");
 
   return (
     <div>
-      <div className="container">
+      {isOpen &&
+        <Configuracoes setIsOpen={setIsOpen} isOpen={isOpen} />
+      }
+      <div className="container pb-5">
         <div className="justify-content-center">
+
+
           <MenuDash
             isOpen={isOpen}
             setIsOpen={setIsOpen}
@@ -35,105 +82,98 @@ export default function Home() {
             timeRange={timeRange}
             setTimeRange={setTimeRange}
           />
-          <div>
-            {isOpen &&
-              <Configuracoes setIsOpen={setIsOpen} isOpen={isOpen} />
-            }
-          </div>
 
-          <div className="card border-0 shadow p-4 mt-5 mb-5 bg-white rounded">
-            <HorizontalCard
+
+          {
+            chart === 'cpu' && !showComponent &&
+            <ZoomChart
               title="Consumo de CPU"
               measure="%"
               isPercentage={false}
               getData={getCpu}
-              getDataNow={getCpuNow}
+              getDataNow={getCpuPrediction}
               dateNow={formartDate(dateNow)}
               dateStart={formartDate(dateStart)}
               playInterval={playInterval}
               setPlayInterval={setPlayInterval}
+              observer={playInterval}
+              setObserver={setPlayInterval}
               timeRange={timeRange}
               colorFill={"#15ED48"}
               tickFormatter={fixedToInt}
-              domain={[0, 1]}
+              // domain={[0, 1]}
+              chart="cpu"
+              setChart={setChart}
+              showComponent={showComponent}
+              setShowComponent={setShowComponent}
+              setDateNow={setDateNow}
             />
-          </div>
+          }
 
-          <div className="card border-0 shadow p-4 mt-5 mb-5 bg-white rounded">
-            <HorizontalCard
+
+          {
+            chart === 'ram' && !showComponent &&
+            <ZoomChart
               title="Consumo de RAM"
               measure="%"
-              isPercentage={true}
+              isPercentage={false}
               getData={getRam}
-              getDataNow={getRamNow}
+              getDataNow={getRamPrediction}
               dateNow={formartDate(dateNow)}
               dateStart={formartDate(dateStart)}
               playInterval={playInterval}
               setPlayInterval={setPlayInterval}
+              observer={playInterval}
+              setObserver={setPlayInterval}
               timeRange={timeRange}
               colorFill={"#9357FF"}
-              tickFormatter={fixedToIntWithouPercentage}
-              domain={[0, 100]}
-            />
-          </div>
-
-          {/* <div className="card-group">
-            <div className="card me-3 border-0 shadow bg-white rounded p-4">
-              <VerticalCard
-                title="Consumo de RAM"
-                measure="%"
-                isPercentage={true}
-                getData={getRam}
-                getDataNow={getRamNow}
-                dateNow={formartDate(dateNow)}
-                dateStart={formartDate(dateStart)}
-                playInterval={playInterval}
-                setPlayInterval={setPlayInterval}
-                timeRange={timeRange}
-                colorFill={"#9357FF"}
-                tickFormatter={fixedToIntWithouPercentage}
-                domain={[0, 100]}
-              />
-            </div>
-            <div className="card ms-3 border-0 shadow bg-white rounded p-4">
-              <VerticalCard
-                title="Consumo de Disco"
-                measure="%"
-                isPercentage={false}
-                getData={getCpu}
-                getDataNow={getCpuNow}
-                dateNow={formartDate(dateNow)}
-                dateStart={formartDate(dateStart)}
-                playInterval={playInterval}
-                setPlayInterval={setPlayInterval}
-                timeRange={timeRange}
-                colorFill={"#FFF73A"}
-                tickFormatter={fixedToInt}
-                domain={[0, 1]}
-              />
-            </div>
-          </div>
-          <div className="card border-0 shadow p-4 mt-5 mb-5 bg-white rounded">
-            <HorizontalCard
-              title="Tempo de Resposta"
-              measure="ms"
-              isPercentage={true}
-              getData={getCpu}
-              getDataNow={getCpuNow}
-              dateNow={formartDate(dateNow)}
-              dateStart={formartDate(dateStart)}
-              playInterval={playInterval}
-              setPlayInterval={setPlayInterval}
-              timeRange={timeRange}
-              colorFill={"#15ED48"}
               tickFormatter={fixedToInt}
-              domain={[0, 1]}
+              // domain={[0, 100]}
+              chart="ram"
+              setChart={setChart}
+              showComponent={showComponent}
+              setShowComponent={setShowComponent}
+              setDateNow={setDateNow}
             />
-          </div>
-          <div className="card border-0 shadow p-4 mt-5 mb-5 bg-white rounded">
-            <HorizontalCard
-              title="Falhas HTTP"
-              measure="/5s"
+          }
+
+
+          {/* {
+            chart === 'ramdetails' && !showComponent &&
+            <ZoomChart2
+              titles={
+                [
+                  "Consumo de RAM (Detalhes)",
+                  "Consumo Heap",
+                  "Consumo Non-Heap"
+                ]
+              }
+              measure="%"
+              // getData={getRamDetails}
+              getDataNow={getRamDetailsNow}
+              // dateNow={formartDate(dateNow)}
+              dateStart={formartDate(dateStart)}
+              playInterval={playInterval}
+              setPlayInterval={setPlayInterval}
+              // observer={playInterval}
+              // setObserver={setPlayInterval}
+              // timeRange={timeRange}
+              colorFill={["#D413AA", "#FFF73A"]}
+              tickFormatter={formatToMegabytes}
+              chart="ramdetails"
+              setChart={setChart}
+              // showComponent={showComponent}
+              setShowComponent={setShowComponent}
+              setDateNow={setDateNow}
+            />
+          } */}
+
+
+          {
+            chart === 'responsetime' && !showComponent &&
+            <ZoomChart
+              title="Tempo de Resposta"
+              measure="s"
               isPercentage={true}
               getData={getCpu}
               getDataNow={getCpuNow}
@@ -141,16 +181,232 @@ export default function Home() {
               dateStart={formartDate(dateStart)}
               playInterval={playInterval}
               setPlayInterval={setPlayInterval}
+              observer={playInterval}
+              setObserver={setPlayInterval}
+              timeRange={timeRange}
+              colorFill={"#FFF73A"}
+              tickFormatter={fixedToIntWithouPercentage}
+              // domain={[0, 1]}
+              chart="responsetime"
+              setChart={setChart}
+              showComponent={showComponent}
+              setShowComponent={setShowComponent}
+              setDateNow={setDateNow}
+            />
+          }
+
+
+          {
+            chart === 'requestscount' && !showComponent &&
+            <ZoomChart
+              title="Número de Requisições"
+              measure=""
+              isPercentage={true}
+              getData={getCpu}
+              getDataNow={getCpuNow}
+              dateNow={formartDate(dateNow)}
+              dateStart={formartDate(dateStart)}
+              playInterval={playInterval}
+              setPlayInterval={setPlayInterval}
+              observer={playInterval}
+              setObserver={setPlayInterval}
               timeRange={timeRange}
               colorFill={"#D413AA"}
-              tickFormatter={fixedToInt}
-              domain={[0, 1]}
+              tickFormatter={fixedToIntWithouPercentage}
+              // domain={[0, 1]}
+              chart="requestscount"
+              setChart={setChart}
+              showComponent={showComponent}
+              setShowComponent={setShowComponent}
+              setDateNow={setDateNow}
             />
-          </div> */}
+          }
 
-          <div className="p-2">
 
-          </div>
+          {showComponent &&
+            <>
+
+              {/* <div className="card border-0 shadow p-4 mt-5 mb-5 bg-white rounded">
+                <HorizontalCard
+                  title="Consumo de CPU"
+                  measure="%"
+                  isPercentage={false}
+                  getData={getCpu}
+                  getDataNow={getCpuNow}
+                  dateNow={formartDate(dateNow)}
+                  dateStart={formartDate(dateStart)}
+                  playInterval={playInterval}
+                  setPlayInterval={setPlayInterval}
+                  observer={playInterval}
+                  setObserver={setPlayInterval}
+                  timeRange={timeRange}
+                  colorFill={"#15ED48"}
+                  tickFormatter={fixedToInt}
+                  domain={[0, 1]}
+                  chart="cpu"
+                  setChart={setChart}
+                  showComponent={showComponent}
+                  setShowComponent={setShowComponent}
+                />
+              </div> */}
+
+
+              <div className="card border-0 shadow p-4 mt-5 mb-5 bg-white rounded">
+                <HorizontalCard2
+                  title="Consumo de CPU"
+                  measure="%"
+                  isPercentage={false}
+                  getData={getCpu}
+                  getDataNow={getCpuNow}
+                  dateNow={formartDate(dateNow)}
+                  dateStart={formartDate(dateStart)}
+                  playInterval={playInterval}
+                  setPlayInterval={setPlayInterval}
+                  observer={playInterval}
+                  setObserver={setPlayInterval}
+                  timeRange={timeRange}
+                  colorFill={"#15ED48"}
+                  tickFormatter={fixedToInt}
+                  // domain={[0, 1]}
+                  chart="cpu"
+                  setChart={setChart}
+                  showComponent={showComponent}
+                  setShowComponent={setShowComponent}
+                />
+              </div>
+
+              <div className="card border-0 shadow p-4 mt-5 mb-5 bg-white rounded">
+                <HorizontalCard2
+                  title="Consumo de RAM"
+                  measure="%"
+                  isPercentage={false}
+                  getData={getRam}
+                  getDataNow={getRamNow}
+                  dateNow={formartDate(dateNow)}
+                  dateStart={formartDate(dateStart)}
+                  playInterval={playInterval}
+                  setPlayInterval={setPlayInterval}
+                  observer={playInterval}
+                  setObserver={setPlayInterval}
+                  timeRange={timeRange}
+                  colorFill={"#9357FF"}
+                  tickFormatter={fixedToInt}
+                  // domain={[0, 100]}
+                  chart="ram"
+                  setChart={setChart}
+                  showComponent={showComponent}
+                  setShowComponent={setShowComponent}
+                />
+              </div>
+
+              <div className="card border-0 shadow p-4 mt-5 mb-5 bg-white rounded">
+                <HorizontalCard2
+                  title="Tempo de Resposta"
+                  measure="s"
+                  isPercentage={true}
+                  getData={getRespTime}
+                  getDataNow={getRespTimeNow}
+                  dateNow={formartDate(dateNow)}
+                  dateStart={formartDate(dateStart)}
+                  playInterval={playInterval}
+                  setPlayInterval={setPlayInterval}
+                  observer={playInterval}
+                  setObserver={setPlayInterval}
+                  timeRange={timeRange}
+                  colorFill={"#FFF73A"}
+                  tickFormatter={fixedToIntWithouPercentage}
+                  // domain={[0, 1]}
+                  chart="responsetime"
+                  setChart={setChart}
+                  showComponent={showComponent}
+                  setShowComponent={setShowComponent}
+                />
+              </div>
+
+              <div className="card border-0 shadow p-4 mt-5 mb-5 bg-white rounded">
+                <HorizontalCard2
+                  title="Número de Requisições"
+                  measure=""
+                  isPercentage={true}
+                  getData={getRequestCount}
+                  getDataNow={getRequestCountNow}
+                  dateNow={formartDate(dateNow)}
+                  dateStart={formartDate(dateStart)}
+                  playInterval={playInterval}
+                  setPlayInterval={setPlayInterval}
+                  observer={playInterval}
+                  setObserver={setPlayInterval}
+                  timeRange={timeRange}
+                  colorFill={"#D413AA"}
+                  tickFormatter={fixedToIntWithouPercentage}
+                  // domain={[0, 1]}
+                  chart="requestscount"
+                  setChart={setChart}
+                  showComponent={showComponent}
+                  setShowComponent={setShowComponent}
+                />
+              </div>
+
+              {/* <div className="row row-cols-1 row-cols-md-1 row-cols-lg-2 gy-5">
+                <div className="col">
+                  <div className="card h-100 border-0 shadow bg-white rounded p-4">
+                    <VerticalCard
+                      title="Consumo de RAM"
+                      measure="%"
+                      isPercentage={true}
+                      getData={getRam}
+                      getDataNow={getRamNow}
+                      dateNow={formartDate(dateNow)}
+                      dateStart={formartDate(dateStart)}
+                      playInterval={playInterval}
+                      setPlayInterval={setPlayInterval}
+                      observer={playInterval}
+                      setObserver={setPlayInterval}
+                      timeRange={timeRange}
+                      colorFill={"#9357FF"}
+                      tickFormatter={fixedToInt}
+                      domain={[0, 100]}
+                      chart="ram"
+                      setChart={setChart}
+                      showComponent={showComponent}
+                      setShowComponent={setShowComponent}
+                    />
+                  </div>
+                </div>
+                <div className="col">
+                  <div className="card h-100 border-0 shadow bg-white rounded p-4">
+                    <VerticalCard2
+                      titles={
+                        [
+                          "Consumo de RAM (Detalhes)",
+                          "Consumo Heap",
+                          "Consumo Non-Heap"
+                        ]
+                      }
+                      measure="MB"
+                      // getData={getRamDetails}
+                      getDataNow={[getRamDetailsNow, getHeapNow, getNonheapNow]}
+                      // dateNow={formartDate(dateNow)}
+                      dateStart={formartDate(dateStart)}
+                      playInterval={playInterval}
+                      setPlayInterval={setPlayInterval}
+                      // observer={playInterval}
+                      // setObserver={setPlayInterval}
+                      // timeRange={timeRange}
+                      colorFill={["#D413AA", "#FFF73A", "#E7E7E7"]}
+                      tickFormatter={formatToMegabytes}
+                      chart="ramdetails"
+                      setChart={setChart}
+                      // showComponent={showComponent}
+                      setShowComponent={setShowComponent}
+                    />
+                  </div>
+                </div>
+              </div> */}
+
+            </>
+          }
+
         </div>
       </div>
     </div>
