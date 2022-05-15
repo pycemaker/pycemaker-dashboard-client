@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { getCpu, getCpuNow, getRam, getRamNow, getRequestCount, getRequestCountNow, getRespTime, getRespTimeNow } from "../../services/api";
+import { getCpu, getCpuNow, getCpuPrediction, getRam, getRamNow, getRamPrediction, getRequestCount, getRequestCountNow, getRespTime, getRespTimeNow } from "../../services/api";
 import { fixedToInt, fixedToIntWithouPercentage, formartDate } from "../../utils/formatters";
 import Configuracoes from "../../components/Configuracoes";
 import HorizontalCard from "../../components/HorizontalCard";
@@ -21,7 +21,7 @@ export default function Home() {
 
 
   useEffect(() => {
-    console.log(timeRange)
+    // console.log(timeRange)
     setDateNow(new Date())
     // setPlayInterval(true)
   }, [timeRange])
@@ -33,11 +33,11 @@ export default function Home() {
   const [dateStart, setDateStart] = useState(date)
 
   useEffect(() => {
-    console.log(dateStart)
+    // console.log(dateStart)
   }, [dateStart])
 
   useEffect(() => {
-    console.log(dateNow)
+    // console.log(dateNow)
     let date = new Date(dateNow)
     date = new Date(date.setHours(date.getHours() - timeRange))
     setDateStart(date)
@@ -45,7 +45,7 @@ export default function Home() {
   }, [dateNow])
 
   useEffect(() => {
-    console.log(dateStart)
+    // console.log(dateStart)
     // let date = new Date(dateNow)
     // date = new Date(date.setHours(date.getHours() - timeRange))
     // setDateStart(date)
@@ -91,7 +91,7 @@ export default function Home() {
               measure="%"
               isPercentage={false}
               getData={getCpu}
-              getDataNow={getCpuNow}
+              getDataNow={getCpuPrediction}
               dateNow={formartDate(dateNow)}
               dateStart={formartDate(dateStart)}
               playInterval={playInterval}
@@ -101,7 +101,7 @@ export default function Home() {
               timeRange={timeRange}
               colorFill={"#15ED48"}
               tickFormatter={fixedToInt}
-              domain={[0, 1]}
+              // domain={[0, 1]}
               chart="cpu"
               setChart={setChart}
               showComponent={showComponent}
@@ -116,9 +116,9 @@ export default function Home() {
             <ZoomChart
               title="Consumo de RAM"
               measure="%"
-              isPercentage={true}
+              isPercentage={false}
               getData={getRam}
-              getDataNow={getRamNow}
+              getDataNow={getRamPrediction}
               dateNow={formartDate(dateNow)}
               dateStart={formartDate(dateStart)}
               playInterval={playInterval}
@@ -128,7 +128,7 @@ export default function Home() {
               timeRange={timeRange}
               colorFill={"#9357FF"}
               tickFormatter={fixedToInt}
-              domain={[0, 100]}
+              // domain={[0, 100]}
               chart="ram"
               setChart={setChart}
               showComponent={showComponent}
@@ -213,7 +213,7 @@ export default function Home() {
               timeRange={timeRange}
               colorFill={"#D413AA"}
               tickFormatter={fixedToIntWithouPercentage}
-              domain={[0, 1]}
+              // domain={[0, 1]}
               chart="requestscount"
               setChart={setChart}
               showComponent={showComponent}
@@ -226,7 +226,7 @@ export default function Home() {
           {showComponent &&
             <>
 
-              <div className="card border-0 shadow p-4 mt-5 mb-5 bg-white rounded">
+              {/* <div className="card border-0 shadow p-4 mt-5 mb-5 bg-white rounded">
                 <HorizontalCard
                   title="Consumo de CPU"
                   measure="%"
@@ -248,7 +248,7 @@ export default function Home() {
                   showComponent={showComponent}
                   setShowComponent={setShowComponent}
                 />
-              </div>
+              </div> */}
 
 
               <div className="card border-0 shadow p-4 mt-5 mb-5 bg-white rounded">
@@ -267,7 +267,7 @@ export default function Home() {
                   timeRange={timeRange}
                   colorFill={"#15ED48"}
                   tickFormatter={fixedToInt}
-                  domain={[0, 1]}
+                  // domain={[0, 1]}
                   chart="cpu"
                   setChart={setChart}
                   showComponent={showComponent}
@@ -291,7 +291,7 @@ export default function Home() {
                   timeRange={timeRange}
                   colorFill={"#9357FF"}
                   tickFormatter={fixedToInt}
-                  domain={[0, 1]}
+                  // domain={[0, 100]}
                   chart="ram"
                   setChart={setChart}
                   showComponent={showComponent}

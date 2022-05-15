@@ -17,8 +17,8 @@ export default function AreaPyce(props) {
 
   function updateArray() {
     if (props.playInterval) {
-      console.log(props.dateStart)
-      props.getDataNow(props.dateStart)
+      // console.log(props.dateNow)
+      props.getDataNow(props.dateNow)
         .then(res => {
           setData(res.data)
           // console.log(props.title, res.data)

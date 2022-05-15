@@ -27,7 +27,7 @@ export default function ZoomChart(props) {
       <div>
         <AreaPyce2
           {...props}
-          ticks={11}
+          // ticks={11}
           width="100%"
           height={600} />
       </div>

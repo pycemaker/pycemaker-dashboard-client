@@ -9,7 +9,7 @@ import {
   Line,
   ComposedChart
 } from "recharts";
-import { getCpuPrediction, getCpuRandom } from "../../services/api";
+import { getCpuNow, getCpuPrediction, getCpuRandom } from "../../services/api";
 import { dateFormatter, formartDate, formatPercentage } from "../../utils/formatters";
 
 function useInterval(callback, delay) {
@@ -30,42 +30,25 @@ function useInterval(callback, delay) {
   }, [delay]);
 }
 
-function findIndex(data, key, value) {
-  for (let i = 0; i < data.length; i++) {
-    if (data[i][key] === value) {
-      return i;
-    }
-  }
-}
 
 export default function AreaPyce2(props) {
 
   const [playInterval, setPlayInterval] = useState(false)
   const [reset, setReset] = useState(true)
-  const [countIndex, setCountIndex] = useState()
   const [isLoading, setIsLoading] = useState(true)
 
   const [data, setData] = useState([])
 
   useInterval(async () => {
     try {
-      let lista = data;
-      let res = await getCpuRandom(formartDate(new Date()))
-      if (res.data.length > 0) {
-        let index = findIndex(data, 'time_series', countIndex);
-        for (let x = 0; x < res.data.length; x++) {
-          index = index + x + 1
-          // console.log(index)
-          lista[index] = {
-            id: index,
-            time_series: lista[index].time_series,
-            value: res.data[x].value,
-            predict_range: lista[index].predict_range,
-            predict_value: lista[index].predict_value
-          }
-        }
-        setData(lista)
-        setCountIndex(lista[index].time_series)
+      let res = await props.getDataNow(props.dateNow, props.timeRange)
+      // console.log(res.data)
+      setData(res.data)
+      if (data[data.length - 1].value !== null && data[data.length - 1].value !== undefined) {
+        // console.log("reset")
+        props.setDateNow(new Date())
+        setPlayInterval(false)
+        setReset(!reset)
       }
     } catch {
       setPlayInterval(false)
@@ -75,9 +58,8 @@ export default function AreaPyce2(props) {
 
   async function getData() {
     try {
-      let res = await getCpuPrediction(formartDate(new Date()))
-      setData(res.data.data)
-      setCountIndex(res.data.last_time_series)
+      let res = await props.getDataNow(props.dateNow, props.timeRange)
+      // console.log(res.data)
       // setTimeout(function () {
       setPlayInterval(true)
       // }, 2000);
@@ -128,7 +110,7 @@ export default function AreaPyce2(props) {
 
   return (
     <>
-      {isLoading &&
+      {data.length === 0 &&
         <div
           style={{
             height: "300px",
@@ -140,7 +122,7 @@ export default function AreaPyce2(props) {
           <div className="lds-facebook"><div></div><div></div><div></div></div>
         </div>
       }
-      {!isLoading &&
+      {data.length > 0 &&
         <ResponsiveContainer
           width={props.width}
           height={props.height}
@@ -169,7 +151,7 @@ export default function AreaPyce2(props) {
               axisLine={false}
               tickLine={false}
               padding={{ bottom: 1 }}
-              domain={[0, 1]}
+              domain={props.domain}
               allowDataOverflow={true}
               tickCount={props.ticks}
             />
