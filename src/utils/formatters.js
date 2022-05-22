@@ -60,11 +60,11 @@ export function bytesToSize(bytes) {
 
 export function formatTime(time) {
   time = time * 1000
-  time = time.toFixed(0)
+  time = parseFloat(time).toFixed(0)
   if (String(time).length <= 3) {
     return time + "ms"
   }
   if (String(time).length > 3) {
-    return (time).toFixed(0) + "s"
+    return time + "s"
   }
 }
