@@ -35,6 +35,10 @@ export function fixedToInt(number) {
   return (number * 100).toFixed(0);
 }
 
+export function fixedToPercentage(number) {
+  return (number * 100).toFixed(0) + "%";
+}
+
 export function fixedToIntWithouPercentage(number) {
   return (number).toFixed(0);
 }
@@ -49,7 +53,18 @@ export function formatToMegabytes(bytes) {
 
 export function bytesToSize(bytes) {
   var sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
-  if (bytes == 0) return '0 Byte';
+  if (bytes === 0) return '0 Byte';
   var i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
   return Math.round(bytes / Math.pow(1024, i), 2) + ' ' + sizes[i];
+}
+
+export function formatTime(time) {
+  time = time * 1000
+  time = time.toFixed(0)
+  if (String(time).length <= 3) {
+    return time + "ms"
+  }
+  if (String(time).length > 3) {
+    return (time).toFixed(0) + "s"
+  }
 }
