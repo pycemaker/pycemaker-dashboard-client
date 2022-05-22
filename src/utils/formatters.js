@@ -59,12 +59,12 @@ export function bytesToSize(bytes) {
 }
 
 export function formatTime(time) {
-  time = time * 1000
-  time = parseFloat(time).toFixed(0)
-  if (String(time).length <= 3) {
-    return time + "ms"
+  let teste = time * 1000
+  teste = parseFloat(teste).toFixed(0)
+  if (String(teste).length <= 3) {
+    return teste + "ms"
   }
-  if (String(time).length > 3) {
-    return time + "s"
+  if (String(teste).length > 3) {
+    return parseFloat(time).toFixed(0) + "s"
   }
 }
