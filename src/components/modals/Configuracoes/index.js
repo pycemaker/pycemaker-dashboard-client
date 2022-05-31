@@ -147,7 +147,7 @@ export default function Configuracoes(props) {
             </select>
           </div>
 
-          <div className="switch-container mb-4">
+          {/* <div className="switch-container mb-4">
             <div className="switch-flex">
               <div className="onoffswitch me-2">
                 <input type="checkbox" name="onoffswitch" className="onoffswitch-checkbox" id="myonoffswitch" tabIndex={0} checked={alertPredict} onChange={() => setAlertPredict(!alertPredict)} />
@@ -243,7 +243,7 @@ export default function Configuracoes(props) {
 
             </div>
 
-          </div>
+          </div> */}
 
           <div className="form-menu-container">
             <div className="form-menu-row" >

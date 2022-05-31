@@ -3,6 +3,7 @@ import {
   getCpu,
   getCpuNow,
   getCpuPrediction,
+  getCurrentHealth,
   getRam,
   getRamDetailsNow,
   getRamNow,
@@ -29,6 +30,7 @@ import VerticalCard2 from "../../components/cards/VerticalCard2";
 import ZoomChart from "../../components/cards/ZoomChart";
 import ZoomChart2 from "../../components/cards/ZoomChart2";
 import ZoomChart3 from "../../components/cards/ZoomChart3";
+import SystemHealth from "../../components/reports/SystemHealth";
 
 export default function Home() {
 
@@ -194,6 +196,11 @@ export default function Home() {
 
           {showComponent &&
             <>
+
+              <SystemHealth
+                timeRange={timeRange}
+                playInterval={playInterval}
+              />
 
               {/* <div className="card border-0 shadow p-4 mt-5 mb-5 bg-white rounded">
                 <HorizontalCard

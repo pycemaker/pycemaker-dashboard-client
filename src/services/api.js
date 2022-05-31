@@ -7,6 +7,16 @@ const api = axios.create({
   }
 })
 
+const mlApi = axios.create({
+  baseURL: process.env.REACT_APP_ML,
+  headers: {
+    "Content-type": "application/json"
+  }
+})
+
+export function getCurrentHealth(timeRange) {
+  return mlApi.get(`/current_health/${timeRange}`);
+}
 
 export function getCpu(dateNow, timeRange) {
   return api.get(`/cpu/${dateNow}/${timeRange}`);
