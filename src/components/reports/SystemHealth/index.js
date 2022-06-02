@@ -78,13 +78,19 @@ export default function SystemHealth(props) {
             <div className="font-14 font-family">Previsão do tempo restante para a Saúde do Sistema<br></br>ser menor que 30%</div>
             {!isLoading ?
               <>
-                {remainingTime > 0 ?
+                {remainingTime > 0 && predictedCurrentHealth > 0.3 &&
                   <>
                     <div className="font-45 font-300 font-family position-absolute bottom-0 pb-4">{secondsToDhms(remainingTime)}</div>
                   </>
-                  :
+                }
+                {remainingTime === 0 && predictedCurrentHealth > 0.3 &&
                   <>
                     <div className="font-22 font-600 font-family position-absolute bottom-0 pb-4 pe-4">A Sáude do Sistema estará estável na(s) próxima(s) {props.timeRange} hora(s)</div>
+                  </>
+                }
+                {remainingTime === 0 && predictedCurrentHealth <= 0.3 &&
+                  <>
+                    <div className="font-22 font-600 font-family position-absolute bottom-0 pb-4 pe-4">A Sáude do Sistema está instável e falhas poderão ocorrer</div>
                   </>
                 }
               </>
