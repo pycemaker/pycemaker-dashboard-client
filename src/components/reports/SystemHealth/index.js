@@ -16,7 +16,9 @@ export default function SystemHealth(props) {
         .then(res => {
           setCurrentHealth(res.data.current_health)
           setPredictCurrentHealth(res.data.predicted_current_health)
-          setRemainingTime(res.data.predicted_remaining_time)
+          if (remainingTime !== res.data.predicted_remaining_time) {
+            setRemainingTime(res.data.predicted_remaining_time)
+          }
           setIsLoading(false)
         })
         .catch(() => {
@@ -24,6 +26,18 @@ export default function SystemHealth(props) {
         })
     }
   }
+
+  useEffect(() => {
+    let tempo = remainingTime
+    const interval = setInterval(() => {
+      if (remainingTime > 0) {
+        tempo = tempo - 1
+        let result = secondsToDhms(tempo)
+        document.getElementById("tempo").innerHTML = result
+      }
+    }, 1000);
+    return () => clearInterval(interval);
+  }, [remainingTime])
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -51,7 +65,11 @@ export default function SystemHealth(props) {
                 <div className="font-14 font-family">Saúde Atual do Sistema</div>
                 {!isLoading ?
                   <>
-                    <div className="font-45 font-300 font-family position-absolute bottom-0 pb-4 pe-4">{fixedToPercentage(currentHealth)}</div>
+                    {currentHealth > 0.3 ?
+                      <div className="font-45 font-300 font-family position-absolute bottom-0 pb-4 pe-4">{fixedToPercentage(currentHealth)}</div>
+                      :
+                      <div className="font-45 font-300 font-red font-family position-absolute bottom-0 pb-4 pe-4">{fixedToPercentage(currentHealth)}</div>
+                    }
                   </>
                   :
                   <LoadingDiv />
@@ -64,7 +82,12 @@ export default function SystemHealth(props) {
                 <div className="font-14 font-family">Previsão da Saúde Atual (média para 1 minuto)</div>
                 {!isLoading ?
                   <>
-                    <div className="font-45 font-300 font-family position-absolute bottom-0 pb-4 pe-4">{fixedToPercentage(predictedCurrentHealth)}</div>
+                    {predictedCurrentHealth > 0.3 ?
+                      <div className="font-45 font-300 font-family position-absolute bottom-0 pb-4 pe-4">{fixedToPercentage(predictedCurrentHealth)}</div>
+                      :
+                      <div className="font-45 font-300 font-family font-red position-absolute bottom-0 pb-4 pe-4">{fixedToPercentage(predictedCurrentHealth)}</div>
+
+                    }
                   </>
                   :
                   <LoadingDiv />
@@ -80,7 +103,7 @@ export default function SystemHealth(props) {
               <>
                 {remainingTime > 0 && predictedCurrentHealth > 0.3 &&
                   <>
-                    <div className="font-45 font-300 font-family position-absolute bottom-0 pb-4">{secondsToDhms(remainingTime)}</div>
+                    <div className="font-45 font-300 font-family position-absolute bottom-0 pb-4" id="tempo"></div>
                   </>
                 }
                 {remainingTime === 0 && predictedCurrentHealth > 0.3 &&
@@ -90,7 +113,7 @@ export default function SystemHealth(props) {
                 }
                 {remainingTime === 0 && predictedCurrentHealth <= 0.3 &&
                   <>
-                    <div className="font-22 font-600 font-family position-absolute bottom-0 pb-4 pe-4">A Sáude do Sistema está instável e falhas poderão ocorrer</div>
+                    <div className="font-22 font-600 font-family position-absolute bottom-0 pb-4 pe-4">A Sáude do Sistema pode estar instável e falhas podem ocorrer</div>
                   </>
                 }
               </>
