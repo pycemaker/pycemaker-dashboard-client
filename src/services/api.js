@@ -7,6 +7,16 @@ const api = axios.create({
   }
 })
 
+const mlApi = axios.create({
+  baseURL: process.env.REACT_APP_ML,
+  headers: {
+    "Content-type": "application/json"
+  }
+})
+
+export function getCurrentHealth(timeRange) {
+  return mlApi.get(`/current_health/${timeRange}`);
+}
 
 export function getCpu(dateNow, timeRange) {
   return api.get(`/cpu/${dateNow}/${timeRange}`);
@@ -36,9 +46,9 @@ export function getRamPrediction(dateStart, timeRange) {
   return api.get(`/ram_predict/${dateStart}/${timeRange}`);
 }
 
-// export function getRamDetailsNow(dateStart) {
-//   return api.get(`/ram_details/${dateStart}`);
-// }
+export function getRamDetailsNow(dateStart) {
+  return api.get(`/ram_details/${dateStart}`);
+}
 
 // export function getHeapNow(dateStart) {
 //   return api.get(`/heap/${dateStart}`);
@@ -48,20 +58,36 @@ export function getRamPrediction(dateStart, timeRange) {
 //   return api.get(`/nonheap/${dateStart}`);
 // }
 
-export function getRespTime(dateNow, timeRange) {
-  return api.get(`/response_time/${dateNow}/${timeRange}`);
+export function getResTime(dateNow, timeRange) {
+  return api.get(`/res_time/${dateNow}/${timeRange}`);
 }
 
-export function getRespTimeNow(dateStart) {
-  return api.get(`/response_time/${dateStart}`);
+export function getResTimeNow(dateStart) {
+  return api.get(`/res_time/${dateStart}`);
 }
 
-export function getRequestCount(dateNow, timeRange) {
-  return api.get(`/request_count/${dateNow}/${timeRange}`);
+export function getReqCount(dateNow, timeRange) {
+  return api.get(`/req_count/${dateNow}/${timeRange}`);
 }
 
-export function getRequestCountNow(dateStart) {
-  return api.get(`/request_count/${dateStart}`);
+export function getReqCountNow(dateStart) {
+  return api.get(`/req_count/${dateStart}`);
+}
+
+export function getSucReqCount(dateNow, timeRange) {
+  return api.get(`/success_req_count/${dateNow}/${timeRange}`);
+}
+
+export function getSucReqCountNow(dateStart) {
+  return api.get(`/success_req_count/${dateStart}`);
+}
+
+export function getFailReqCount(dateNow, timeRange) {
+  return api.get(`/fail_req_count/${dateNow}/${timeRange}`);
+}
+
+export function getFailReqCountNow(dateStart) {
+  return api.get(`/fail_req_count/${dateStart}`);
 }
 
 export function getJobsData() {

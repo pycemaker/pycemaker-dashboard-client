@@ -1,0 +1,7 @@
+{
+  "name": "Pycemaker Dashboard Client",
+  "description": "Aplicação que exibe em tempo real métricas de uso e da saúde do sistema",
+  "repository": "https://github.com/pycemaker/pycemaker-dashboard-client",
+  "logo": "https://raw.githubusercontent.com/pycemaker/pycemaker-dashboard-client/main/src/assets/icon.png",
+  "keywords": ["nodejs", "react"]
+}

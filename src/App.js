@@ -1,5 +1,4 @@
 import { Route, Routes } from "react-router-dom";
-import Configuracoes from "./components/Configuracoes";
 import Home from "./pages/Home";
 
 
@@ -8,7 +7,6 @@ function App() {
     <div>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="configuracoes" element={<Configuracoes />} />
       </Routes>
     </div>
   );
