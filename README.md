@@ -40,6 +40,21 @@ $ npm install
 </ul>
 </ul>
 
+<ul>
+<li><b>Criação das Variáveis</b></li>
+<ul>
+<li>Crie um arquivo <b>.env</b> e configure as variáveis a seguir:
+<br/>
+
+```bash
+NODE_OPTIONS=--max_old_space_size=2560
+REACT_APP_BACKEND=endereco_do_backend
+REACT_APP_ML=endereco_do_ml
+```
+
+</li>
+</ul>
+</ul>
 
 <ul>
 <li><b>Execute a aplicação</b></li>
